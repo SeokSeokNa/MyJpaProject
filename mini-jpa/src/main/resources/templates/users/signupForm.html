@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/users/new}" th:object="${userForm}" method="post">
+            <div class="row">
+                <h4>Account</h4>
+                <div class="input-group input-group-icon">
+                    <input type="text" th:field="*{userId}" placeholder="아이디"/>
+                    <p th:if="${#fields. hasErrors('userId')}" th:errors="*{userId}">Incorrect date</p>
+                    <div class="input-icon"><i class="fa fa-id-card"></i></div>
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="password" th:field="*{password}" placeholder="비밀번호"/>
+                    <p th:if="${#fields. hasErrors('password')}" th:errors="*{password}">Incorrect date</p>
+                    <div class="input-icon"><i class="fa fa-key"></i></div>
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="text" th:field="*{name}" placeholder="이름"/>
+                    <p th:if="${#fields. hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+                    <div class="input-icon"><i class="fa fa-user"></i></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-half">
+                    <h4>Date of Birth</h4>
+                    <div class="input-group">
+                        <div class="col-third">
+                            <input type="text" th:field="*{year}" placeholder="YYYY"/>
+                        </div>
+                        <div class="col-third">
+                            <input type="text" th:field="*{month}" placeholder="MM"/>
+                        </div>
+                        <div class="col-third">
+                            <input type="text" th:field="*{date}" placeholder="DD"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-half">
+                    <h4>Gender</h4>
+                    <div class="input-group">
+                        <th:block th:each="gender , index : ${T(com.firstjpa.minijpa.domain.Gender).values()}">
+                            <input type="radio" name="gender" th:value="${gender}" th:id="${gender}" th:checked="${index.index} ==0"/>
+                            <label th:for="${gender}" th:text="${gender}"></label>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h4>Terms and Conditions</h4>
+                <div class="input-group">
+                    <input type="checkbox" id="terms"/>
+                    <label for="terms">꼬딜이가 만든 사이트에 가입 하시는것에 동의합니다.</label>
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary"  disabled="disabled">확인</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script language="JavaScript" type="text/javascript">
+        $("#terms").change(function (){
+            if($("#terms").is(":checked")){
+                $(".btn").attr("disabled", false);
+            }else{
+                $(".btn").attr("disabled", true);
+            }
+        });
+
+    </script>
+</body>
+</html>

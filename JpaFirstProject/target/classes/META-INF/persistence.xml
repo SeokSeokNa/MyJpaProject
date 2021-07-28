@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="hello">
+        <properties>
+            <!-- 필수 속성 -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/firstjpa"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> <!--방언 설정부-->
+
+            <!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true"/> <!--로그창에 쿼리를 보여주는 옵션-->
+            <property name="hibernate.format_sql" value="true"/> <!--로그창에 보여진 쿼리를 이쁘게 정리해줌-->
+            <property name="hibernate.use_sql_comments" value="true"/> <!--로그창에 쿼리위에 어떤것에 대한 쿼리인지 주석으로 보여줌-->
+            <!--            <property name="hibernate.jdbc.batch_size" value="10"/>--> <!--네트워크 통신 횟수정하는것 , 한번에 대용량 인서트 쿼리를 만질때 한번갔다 끊고 하는거보다 모아서 가고 싶을때 좋음 !! , 한번에 몇개씩 insert 할건지;-->
+            <property name="hibernate.hbm2ddl.auto" value="create" /> <!--어플리케이션 실행시 DB 테이블 자동 생성해주는 옵션-->
+            <!--create : 기존테이블 삭제 후 다시 생성
+                create-drop : create 와 같으나 종료시점에 테이블을 DROP
+                update : 변경분만 반영(운영DB에는 사용하면 안됨!! drop 않하고 alter로 수정함 , 필드추가만 가능하고 지우는건 안됨)
+                validate : 엔티티와 테이블이 정상 매핑되었는지만 확인(엔티티는 name필드인데 DB에는 user_name일 경우 맵핑이 안되니 오류표시를 내어 문제있다고 알려줌)
+                none : 그냥 이 기능을 아에 안쓰겠다는것 ( 주석처리 하나 이거 하나 똑같음 )
+                            -->
+        </properties>
+    </persistence-unit>
+</persistence>
