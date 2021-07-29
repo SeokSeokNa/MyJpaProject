@@ -17,7 +17,7 @@ public class UserRepository {
         em.persist(user);
     }
 
-    //중복된 아디값 찾기
+    //중복된 아디값 찾기//
     public Long findByUserId(String userId) {
         Long cnt = em.createQuery("select count (m) from User m where m.userId =: userId", Long.class)
                 .setParameter("userId", userId)
