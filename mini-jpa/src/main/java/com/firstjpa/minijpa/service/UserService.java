@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,7 +24,10 @@ public class UserService {
 
     //중복체크
     public Long overlapId(String userId) {
-        return userRepository.findByUserId(userId);
+        return userRepository.findByUserIdOverlap(userId);
     }
 
+    public List<User> login(String userId, String password) {
+        return userRepository.findByUserId(userId , password);
+    }
 }

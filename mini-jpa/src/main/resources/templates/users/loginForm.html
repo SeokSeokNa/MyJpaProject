@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body>
+    <div class="wrapper">
+        <form class="form-signin" th:action="@{/users/login}" th:object="${userLoginForm}" method="post">
+            <h2 class="form-signin-heading">Please login</h2>
+
+            <input type="text" class="form-control" name="username"  th:field="*{userId}"  placeholder="id" required="" autofocus="" />
+            <p th:if="${#fields. hasErrors('userId')}" th:errors="*{userId}">Incorrect date</p>
+
+            <input type="password" class="form-control" name="password" th:field="*{password}"  placeholder="Password" required=""/>
+            <p th:if="${#fields. hasErrors('password')}" th:errors="*{password}">Incorrect date</p>
+
+
+
+            <label class="checkbox">
+                <input type="checkbox" th:field="*{isRememberId}" value="true" id="rememberMe" name="rememberMe"> Remember me
+            </label>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

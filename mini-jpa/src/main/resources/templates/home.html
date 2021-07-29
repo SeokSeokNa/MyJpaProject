@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tf="http://www.w3.org/1999/html">
 <head>
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -15,8 +15,10 @@
             <a class="et-hero-tab" href="#tab-es6">ES6</a>
             <a class="et-hero-tab" href="#tab-flexbox">Flexbox</a>
             <a class="et-hero-tab" href="#tab-react">React</a>
-            <a class="et-hero-tab" href="#tab-angular">로그인</a>
-            <a class="et-hero-tab" href="/users/new">회원가입</a>
+            <a class="et-hero-tab" href="/users/login" th:if="${session.principal == null}">로그인</a>
+            <a class="et-hero-tab" href="/users/logout" th:unless="${session.principal == null}">로그아웃</a>
+            <a class="et-hero-tab" href="/users/new" th:if="${session.principal == null}">회원가입</a>
+            <a class="et-hero-tab" href="#" th:unless="${session.principal == null}" th:text="${session.principal.name + '님'}"></a>
             <span class="et-hero-tab-slider"></span>
         </div>
     </section>

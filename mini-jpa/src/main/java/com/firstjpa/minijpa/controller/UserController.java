@@ -1,6 +1,7 @@
 package com.firstjpa.minijpa.controller;
 
 import com.firstjpa.minijpa.controller.Form.UserForm;
+import com.firstjpa.minijpa.controller.Form.UserLoginForm;
 import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,12 +25,14 @@ public class UserController {
 
     private final UserService userService;
 
+    //UserForm객체 매핑 해서 회원가입 폼으로이동
     @GetMapping("/users/new")
     public String signupForm(Model model) {
         model.addAttribute("userForm", new UserForm());
         return "users/signupForm";
     }
 
+    //회원가입
     @PostMapping("/users/new")
     public String signup(@Valid UserForm userForm , BindingResult result) {
         //중복체크
@@ -42,6 +48,52 @@ public class UserController {
         }
         User user = User.createUser(userForm);
         userService.join(user);
+
+        return "redirect:/";
+    }
+
+
+    //UserLoginForm객체 매핑 해서 로그인 폼으로이동
+    @GetMapping("/users/login")
+    public String loginForm(Model model) {
+        model.addAttribute("userLoginForm", new UserLoginForm());
+        return "users/loginForm";
+    }
+
+    //로그인
+    @PostMapping("/users/login")
+    public String login(@Valid UserLoginForm form ,
+                        BindingResult result,
+                        HttpSession session ,
+                        HttpServletResponse response) {
+        log.info("로그인 호출");
+        List<User> principal = userService.login(form.getUserId(), form.getPassword());//principal은 접근주체 라는 뜻
+        log.info("체크 = " + form.getIsRememberId());
+        if (principal.size() > 0) {//존재하는 정보라면
+            Cookie rememberCookie = new Cookie("REMEMBER", form.getUserId());
+            rememberCookie.setPath("/");
+            if(form.getIsRememberId().equals("true")) {
+                rememberCookie.setMaxAge(60*60*24*7);
+            } else {
+                rememberCookie.setMaxAge(0);
+            }
+            response.addCookie(rememberCookie);
+
+            session.setAttribute("principal" , principal.get(0)); //세션 만들기
+        } else {
+            FieldError fieldError = new FieldError("userLoginForm", "userId", "아이디 또는 비밀번호가 맞지 않습니다.");
+            result.addError(fieldError);
+            return "users/loginForm";
+        }
+
+        return "redirect:/";
+    }
+    
+    //로그아웃
+    @GetMapping("/users/logout")
+    public String logout(HttpSession session) {
+        log.info("로그아웃 호출");
+        session.invalidate();
 
         return "redirect:/";
     }
