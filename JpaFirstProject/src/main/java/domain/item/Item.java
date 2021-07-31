@@ -1,4 +1,7 @@
-package domain;
+package domain.item;
+
+import domain.CategoryItem;
+import domain.OrderItem;
 
 import javax.persistence.*;
 import java.util.ArrayList;

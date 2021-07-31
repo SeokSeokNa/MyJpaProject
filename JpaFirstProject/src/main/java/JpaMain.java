@@ -1,10 +1,10 @@
 import domain.*;
+import domain.item.Item;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -51,24 +51,24 @@ public class JpaMain {
             Order order = Order.createOrder(member, OrderStatus.ORDER, delivery , milkItem , cocoBallItem);
             em.persist(order);
 
-//            em.flush();
-//            em.clear();
+            em.flush();
+            em.clear();
 
             Order findOrder = em.find(Order.class, 1L);
-            Delivery orderDelivery= findOrder.getDelivery();
-            List<OrderItem> orderItems = findOrder.getOrderItems();
-            System.out.println("주문자 = "+findOrder.getMember().getName());
-            System.out.println("주문자 주소 = " + orderDelivery.getCity() + " " + orderDelivery.getStreet() + " " + orderDelivery.getZipcode());
-            System.out.println("");
-
-            for (OrderItem orderItem : orderItems) {
-                System.out.println("카테고리 = " + orderItem.getItem().getCategoryItems().get(0).getCategory().getName());
-                System.out.println("제품명 = " + orderItem.getItem().getItemName());
-                System.out.println("주문수량 = " + orderItem.getOrderCount());
-                System.out.println("주문가격 = " + orderItem.getOrderPrice());
-                System.out.println("==========================================================================");
-                System.out.println("==========================================================================");
-            }
+//            Delivery orderDelivery= findOrder.getDelivery();
+//            List<OrderItem> orderItems = findOrder.getOrderItems();
+//            System.out.println("주문자 = "+findOrder.getMember().getName());
+//            System.out.println("주문자 주소 = " + orderDelivery.getCity() + " " + orderDelivery.getStreet() + " " + orderDelivery.getZipcode());
+//            System.out.println("");
+//
+//            for (OrderItem orderItem : orderItems) {
+//                System.out.println("카테고리 = " + orderItem.getItem().getCategoryItems().get(0).getCategory().getName());
+//                System.out.println("제품명 = " + orderItem.getItem().getItemName());
+//                System.out.println("주문수량 = " + orderItem.getOrderCount());
+//                System.out.println("주문가격 = " + orderItem.getOrderPrice());
+//                System.out.println("==========================================================================");
+//                System.out.println("==========================================================================");
+//            }
 
 
 

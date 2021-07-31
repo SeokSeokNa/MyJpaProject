@@ -1,5 +1,7 @@
 package domain;
 
+import domain.item.Item;
+
 import javax.persistence.*;
 
 @Entity
