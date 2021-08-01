@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/postFormPage.css}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="container" class="container">
+        <h1 class="page-title">write post</h1>
+        <form  th:action="@{/post/new}" th:object="${postForm}" method="post">
+            <label>Title:</label>
+            <input class="textField" type="text" name="title" placeholder="Title" th:field="*{title}">
+            <p th:if="${#fields. hasErrors('title')}" th:errors="*{title}">Incorrect date</p>
+            <label>Message:</label>
+            <textarea class="textArea" name="message" placeholder="Message" th:field="*{contents}"></textarea>
+            <p th:if="${#fields. hasErrors('contents')}" th:errors="*{contents}">Incorrect date</p>
+            <input class="button" type="button" name="button" value="전송" onclick="this.form.submit();">
+        </form>
+        <div id="postContain" class="postContainer"></div>
+    </div>
+</body>
+</html>
