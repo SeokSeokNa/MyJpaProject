@@ -7,6 +7,8 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 
 @SpringBootApplication
 public class MiniJpaApplication {
+	public static final String UPLOAD_PATH = "E:\\Study\\fileupload";
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(MiniJpaApplication.class, args);

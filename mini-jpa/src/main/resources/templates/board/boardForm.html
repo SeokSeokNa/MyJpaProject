@@ -8,13 +8,14 @@
 <body>
     <div id="container" class="container">
         <h1 class="page-title">write post</h1>
-        <form  th:action="@{/post/new}" th:object="${postForm}" method="post">
+        <form th:action="@{/board/new}" th:object="${boardForm}" method="post" enctype="multipart/form-data">
             <label>Title:</label>
             <input class="textField" type="text" name="title" placeholder="Title" th:field="*{title}">
             <p th:if="${#fields. hasErrors('title')}" th:errors="*{title}">Incorrect date</p>
             <label>Message:</label>
             <textarea class="textArea" name="message" placeholder="Message" th:field="*{contents}"></textarea>
             <p th:if="${#fields. hasErrors('contents')}" th:errors="*{contents}">Incorrect date</p>
+            <input type="file" name="uploadfile" placeholder="파일 선택" multiple="multiple"/>
             <input class="button" type="button" name="button" value="전송" onclick="this.form.submit();">
         </form>
         <div id="postContain" class="postContainer"></div>

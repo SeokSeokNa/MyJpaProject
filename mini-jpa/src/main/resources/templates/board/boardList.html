@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/boardList.css}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="content">
+        <div class="content_inner">
+            <h2>Notice Board <a href="/" style="float: right">home</a></h2>
+            <h3 style="margin-left: 47px; margin-right: 74px;border-bottom: medium none !important;background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;">
+                사람들이 올린 게시글을 구경해보세요!
+            </h3>
+
+            <div class="main_class" th:each="board : ${boardList}">
+                <div class="image_class">
+                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|"/> <!--문자열 합치기 "|a,b|"-->
+                    <h1 class="heading_class" th:text="${board.getTitle()}"></h1>
+                    <div class="content-theme">
+                        <p>
+                            <b th:text="${board.getContents()}"></b>
+                        </p>
+                    </div>
+                    <div class="button1" data-id="1" id="theme1">
+                        <a href="#">
+                            <button class="btn btn-primary1">보기</button>
+                        </a></div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <script language="JavaScript" type="text/javascript">
+        document.getElementsByTagName("h1")[0].style.fontSize = "80px";
+    </script>
+</body>
+</html>

@@ -9,9 +9,13 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@SequenceGenerator(name = "USER_SEQ_GENERATOR", // 매핑할 데이터베이스 시퀀스 이름
+        sequenceName = "USER_SEQ",      // DB에 생성된 시퀀스 이름
+        initialValue = 1,                 // DDL 생성시만 사용되며 시작값
+        allocationSize = 1)
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "USER_SEQ_GENERATOR")
     @Column(name = "member_id")
     private Long id;
     private String userId;

@@ -67,19 +67,10 @@ public class UserController {
                         HttpSession session ,
                         HttpServletResponse response) {
         log.info("로그인 호출");
-        List<User> principal = userService.login(form.getUserId(), form.getPassword());//principal은 접근주체 라는 뜻
+        List<User> users = userService.login(form.getUserId(), form.getPassword());
         log.info("체크 = " + form.getIsRememberId());
-        if (principal.size() > 0) {//존재하는 정보라면
-            Cookie rememberCookie = new Cookie("REMEMBER", form.getUserId());
-            rememberCookie.setPath("/");
-            if(form.getIsRememberId().equals("true")) {
-                rememberCookie.setMaxAge(60*60*24*7);
-            } else {
-                rememberCookie.setMaxAge(0);
-            }
-            response.addCookie(rememberCookie);
-
-            session.setAttribute("principal" , principal.get(0)); //세션 만들기
+        if (users.size() > 0) {//존재하는 정보라면
+            session.setAttribute("userinfo" , users.get(0)); //세션 만들기
         } else {
             FieldError fieldError = new FieldError("userLoginForm", "userId", "아이디 또는 비밀번호가 맞지 않습니다.");
             result.addError(fieldError);

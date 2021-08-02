@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/boardForm2.css}">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magicsuggest/2.1.4/magicsuggest-min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/board/new2}" th:object="${boardForm}" method="post" enctype="multipart/form-data">
+<div class="container">
+    <div class="post-form">
+        <div class="post-form-backdrop closed"></div>
+        <div class="post-section editor-title">
+            <h3 class="page-title">New Post</h3>
+        </div>
+        <div class="post-section">
+            <label for="post-title">Post Content</label>
+            <div class="post-title">
+                <input type="text" name="title" id="post-title" class="post-input large" placeholder="Title" th:field="*{title}"/>
+                <p th:if="${#fields. hasErrors('title')}" th:errors="*{title}">Incorrect date</p>
+            </div>
+            <div class="post-content">
+                <textarea name="content" class="post-input" placeholder="Content" th:field="*{contents}"></textarea>
+                <p th:if="${#fields. hasErrors('contents')}" th:errors="*{contents}">Incorrect date</p>
+            </div>
+        </div>
+        <div class="post-section post-media">
+            <h2 style="font-size: 13px;color: #97c7a6;">여러파일을 올리시려면 파일선택 후 여러개를 한번에 올리셔야 합니다.</h2>
+            <label>Media</label>
+            <div class="post-media-inner">
+                <button type="button" class="post-media-icon btn btn-default" id="imgbtn">
+                    <i class="glyphicon glyphicon-plus"></i><br>
+                    Add Media
+                </button>
+                <input  type="file" name="uploadfile" id="image" accept="image/*" multiple="multiple"/>
+<!--                <input  type="file" id="image" accept="image/*" multiple="multiple"onchange="setThumbnail(event,this);"/>-->
+                <div id="image_container"></div>
+
+            </div>
+        </div>
+        <div class="post-section post-buttons">
+            <button type="button" class="btn btn-primary" onclick="goData();">저장</button>
+            <button type="button" class="btn btn-success">취소</button>
+        </div>
+    </div>
+</div>
+</form>
+
+
+    <script language="JavaScript" type="text/javascript">
+        var storedFiles = [];
+
+        $("#image").on('change', function () {
+            var fileList = this.files;
+            for (var i = 0; i < fileList.length; i++) {
+                storedFiles.push(fileList[i]);
+            }
+        });
+        function setThumbnail(event , file) {
+            var fileList = file.files;
+            console.log(fileList);
+            //여러개 올릴꺼면 한번에 여러개를 선택하여 올려야한다.
+            //여러개를 선택 안하고 하나씩 선택하면 계속 처음부분 사진만 업데이트 된다.
+            // 파일선택 창에서 취소를 눌러도 마찬가지로 초기화된다.
+           /* if (document.querySelector('div.thumbnail')!= null || event.target.files.length == 0) {
+                alert("선택하신 파일이 모두 초기화 됩니다.")
+                var removeEl = document.querySelector('div.thumbnail');
+                removeEl.parentNode.removeChild(removeEl);
+            }*/
+            for (var image of event.target.files) {
+            // for (var i=0; i<fileList.length; i++) {
+                var reader = new FileReader();
+                console.log(image);
+                storedFiles.push(image);
+                reader.onload = function (event) {
+                    // <div className="post-media-icon thumbnail">
+                    //     <button className="delete-media btn btn-danger btn-xs">&times;</button>
+                    //     <img src="//placehold.it/150x150" alt=""/>
+                    // </div>
+
+                    var div = document.createElement("div");
+                    div.className = "post-media-icon thumbnail";
+                    div.id = "thumbnail";
+                    var button = document.createElement("button");
+                    button.className = "delete-media btn btn-danger btn-xs";
+                    button.onclick = function () {
+                        let input = document.querySelector("input#image");
+                        var files = input.files;
+                        // console.log(files[0].name);
+                    };
+
+                    button.innerHTML = "&times";
+                    var img = document.createElement("img");
+                    img.style.width = "100%";
+                    img.style.height = "100%";
+                    img.setAttribute("src", event.target.result);
+                    div.appendChild(button);
+                    div.appendChild(img);
+
+
+                    document.querySelector("button#imgbtn").before(div);
+                };
+                // console.log(image);
+                reader.readAsDataURL(image);
+                // reader.readAsDataURL(fileList[i]);
+            }
+
+        };
+
+        //트리거 함수
+        $("#imgbtn").bind('click', function () {
+            $("#image").click();
+        });
+
+        //전송
+        function goData(){
+            var formData = document.querySelector("form")
+            formData.append("uploadfile",storedFiles)
+
+            // formData.set("request", storedFiles);
+            // for(var i=0;i<storedFiles.length;i++) {
+            // }
+            formData.append("test","나원석");
+            for (var i = 0; i < storedFiles.length; i++) {
+                formData.append("files[]", storedFiles[i]);
+            }
+
+            formData.submit();
+        }
+
+
+
+    </script>
+
+</body>
+</html>
