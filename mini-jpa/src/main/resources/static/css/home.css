@@ -6,6 +6,8 @@ a {
     text-decoration: none;
 }
 
+
+
 .et-hero-tabs,
 .et-slide {
     display: flex;
@@ -17,12 +19,14 @@ a {
     background: #eee;
     text-align: center;
     padding: 0 2em;
+    color: #04ff00;
 }
 .et-hero-tabs h1,
 .et-slide h1 {
     font-size: 2rem;
     margin: 0;
-    letter-spacing: 1rem;
+    letter-spacing: 0.3rem;
+    color: azure;
 }
 .et-hero-tabs h3,
 .et-slide h3 {
@@ -56,6 +60,7 @@ a {
     letter-spacing: 0.1rem;
     transition: all 0.5s ease;
     font-size: 0.8rem;
+    font-weight: bold;
 }
 .et-hero-tab:hover {
     color: white;
@@ -75,7 +80,7 @@ a {
 @media (min-width: 800px) {
     .et-hero-tabs h1,
     .et-slide h1 {
-        font-size: 3rem;
+        font-size: 2rem;
     }
     .et-hero-tabs h3,
     .et-slide h3 {

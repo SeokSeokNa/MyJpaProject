@@ -5,13 +5,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
+        *{
+            font-size: 16px;
+            font-family: 'Gowun Batang', serif;
+        }
+
+    </style>
 </head>
 <body>
     <!-- Hero -->
     <section class="et-hero-tabs">
-        <h1>NH - Project Beta.</h1>
-        <h3>웹프로젝트 베타</h3>
-        <div class="et-hero-tabs-container">
+        <h1 style="color: #878787">NH - Project Beta.</h1>
+        <h3 style="color: #498fd7">웹프로젝트 베타</h3>
+        <div class="et-hero-tabs-container" style="background-color: #79a4a085">
             <a class="et-hero-tab" href="/board/list">게시판</a>
             <a class="et-hero-tab" href="/board/list2">게시판2</a>
             <a class="et-hero-tab" href="/board/new">글쓰기</a>
@@ -25,26 +34,59 @@
     </section>
 
     <!-- Main -->
-    <main class="et-main">
-        <section class="et-slide" id="tab-es6">
-            <h1>ES6</h1>
-            <h3>something about es6</h3>
+<!--    <main class="et-main" style="background: #95959582;">-->
+<!--        <section class="et-slide" id="tab-es6" style="background-image: url('/images/back1.jpg');background-repeat: no-repeat; background-size: cover;-->
+<!--                    float: left;width: 29%;background-position: 47%;">-->
+<!--            <h1>ES6</h1>-->
+<!--            <h3>something about es6</h3>-->
+<!--        </section>-->
+<!--        <section class="et-slide" id="tab-flexbox" style="background-image: url('/images/back2.jpg');background-repeat: no-repeat; background-size: cover;-->
+<!--                   float: left;margin-left: 1%;width: 31%;background-position: 49%;">-->
+<!--            <h1>Flexbox</h1>-->
+<!--            <h3>something about flexbox</h3>-->
+<!--        </section>-->
+<!--        <section class="et-slide" id="tab-react" style="background-image: url('/images/back3.jpg');background-repeat: no-repeat; background-size: cover;-->
+<!--                        width: 28%;margin-left: 0%;float: left;background-position: 58%;">-->
+<!--            <h1>React</h1>-->
+<!--            <h3>something about react</h3>-->
+<!--        </section>-->
+<!--        <section class="et-slide" id="tab-angular" style="background-image: url('/images/back4.jpg');background-repeat: no-repeat; background-size: cover;-->
+<!--            width: 48%;float: left; background-position: 20% 57%;">-->
+<!--            <h1>Angular</h1>-->
+<!--            <h3>something about angular</h3>-->
+<!--        </section>-->
+<!--        <section class="et-slide" id="tab-other" style="background-image: url('/images/back5.jpg');background-repeat: no-repeat; background-size: cover;-->
+<!--                margin-left: 52%;width: 48%;background-position: 24% 41%;">-->
+<!--            <h1>Other</h1>-->
+<!--            <h3>something about other</h3>-->
+<!--        </section>-->
+<!--    </main>-->
+
+    <main class="et-main" style="background: #95959582;">
+        <section class="et-slide" id="tab-es6" style="background-image: url('/images/back1.jpg');background-repeat: no-repeat;
+    background-position: 8% 25%;">
+            <h1>Cafe</h1>
+            <h3>2020.07.18</h3>
         </section>
-        <section class="et-slide" id="tab-flexbox">
-            <h1>Flexbox</h1>
-            <h3>something about flexbox</h3>
+        <section class="et-slide" id="tab-flexbox" style="background-image: url('/images/back2.jpg');background-repeat: no-repeat;
+background-position: 108% 0%;">
+            <h1>Musical</h1>
+            <h3>2020.10.10</h3>
         </section>
-        <section class="et-slide" id="tab-react">
-            <h1>React</h1>
-            <h3>something about react</h3>
+        <section class="et-slide" id="tab-react" style="background-image: url('/images/back3.jpg');background-repeat: no-repeat;
+background-position: 8% 66%;">
+            <h1>BukChon</h1>
+            <h3>2020.04.30</h3>
         </section>
-        <section class="et-slide" id="tab-angular">
-            <h1>Angular</h1>
-            <h3>something about angular</h3>
+        <section class="et-slide" id="tab-angular" style="background-image: url('/images/back4.jpg');background-repeat: no-repeat;
+background-position: 91% 60%;">
+            <h1>Gyeongbokgung</h1>
+            <h3>2020.11.28 seo_jeong</h3>
         </section>
-        <section class="et-slide" id="tab-other">
-            <h1>Other</h1>
-            <h3>something about other</h3>
+        <section class="et-slide" id="tab-other" style="background-image: url('/images/back5.jpg');background-repeat: no-repeat;
+background-position: 8% 17%;">
+            <h1>Gyeongbokgung</h1>
+            <h3>2020.11.28 won_seok</h3>
         </section>
     </main>
 
