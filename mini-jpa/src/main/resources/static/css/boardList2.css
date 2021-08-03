@@ -312,27 +312,27 @@ ul {
     background-size: 100px;
 }
 .social-button.twitter-button.active {
-    bottom: 110px;
-    right: 21px;
+    bottom: 13%;
+    right: 1%;
 }
 .social-button.facebook-button {
     background: url("https://image.flaticon.com/icons/png/512/3791/3791151.png") no-repeat center;
 }
 .social-button.facebook-button.active {
-    bottom: 105px;
-    right: 73px;
+    bottom: 12%;
+    right: 4%;
 }
 .social-button.pinterest-button {
     background: url("https://image.flaticon.com/icons/png/512/2946/2946209.png") no-repeat center;
 }
 .social-button.pinterest-button.active {
-    bottom: 67px;
-    right: 109px;
+    bottom: 7%;
+    right: 6%;
 }
 .social-button.insta-button {
     background: url("https://cdn4.iconfinder.com/data/icons/social-icon-4/842/instagram-256.png") no-repeat center;
 }
 .social-button.insta-button.active {
-    bottom: 15px;
-    right: 105px;
+    bottom: 1%;
+    right: 6%;
 }
