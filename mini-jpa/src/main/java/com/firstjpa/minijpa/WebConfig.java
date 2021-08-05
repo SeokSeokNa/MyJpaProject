@@ -10,6 +10,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**") //localhost:8080/images/파일명 하면 이미지가 나옴
-                .addResourceLocations("file:///E:/Study/fileupload/");
+                .addResourceLocations("file:///C:/fileupload/");
     }
 }
