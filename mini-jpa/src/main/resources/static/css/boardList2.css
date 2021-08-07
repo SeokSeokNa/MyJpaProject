@@ -66,7 +66,7 @@ ul {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
-    background: azure;
+    background: antiquewhite;
 }
 .cards .card__img {
     max-height: 200px;

@@ -17,7 +17,12 @@ public class BoardRepository {
         em.persist(board);
     }
 
-    //게시글 조회
+    //게시글 아이디로 조회(디테일페이지)
+    public Board findById(Long id) {
+        return em.find(Board.class , id);
+    }
+
+    //게시글  전체조회
     public List<Board> findAll() {
        return em.createQuery(
                 "select b from Board b" +

@@ -1,0 +1,14 @@
+.img-thumbnail {
+    border: 0;
+    cursor: pointer;
+}
+.img-caption {
+    font-size: 0.75em;
+}
+
+/*@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');*/
+
+/**{*/
+/*    font-size: 25px;*/
+/*    font-family: 'Cute Font', cursive;*/
+/*}*/

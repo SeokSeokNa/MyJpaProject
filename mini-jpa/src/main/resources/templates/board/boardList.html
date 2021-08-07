@@ -6,7 +6,7 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body style="background: lightblue">
+<body style="background: white">
 <div class="plus-button"></div>
 <div class="social-button twitter-button"></div>
 <div class="social-button facebook-button"></div>
@@ -66,7 +66,8 @@
                         <span class="price__label" th:text="${board.getUser().getName()}">IDR 1500K /</span>
                     </div>
                 </div>
-                <button>Detail</button>
+                <button th:onclick="'location.href=\''+ @{/board/detail/{id}(id=${board.getId()})} + '\''">보기</button>
+<!--                @{/board/detail/{id}(id=${board.getId()})}-->
             </div>
             <span class="credit-img">image by: @seokseokNa</span>
         </div>

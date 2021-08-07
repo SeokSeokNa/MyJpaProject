@@ -22,7 +22,8 @@
         <h3 style="color: #66f766">photo project</h3>
         <div class="et-hero-tabs-container" style="background-color: #ffffff5c">
             <a class="et-hero-tab" href="/board/list">게시판</a>
-            <a class="et-hero-tab" href="/board/new">글쓰기</a>
+            <a class="et-hero-tab"  th:if="${session.userinfo == null}" th:onclick="test(1)">글쓰기</a>
+            <a class="et-hero-tab"  th:unless="${session.userinfo == null}"th:onclick="test(2)">글쓰기</a>
             <a class="et-hero-tab" href="/users/login" th:if="${session.userinfo == null}">로그인</a>
             <a class="et-hero-tab" href="/users/logout" th:unless="${session.userinfo == null}">로그아웃</a>
             <a class="et-hero-tab" href="/users/new" th:if="${session.userinfo == null}">회원가입</a>
@@ -89,6 +90,16 @@ background-position: 8% 17%;">
     </main>
 
     <script language="JavaScript" type="text/javascript">
+        function test(session) {
+            // "/board/new"
+            if (session == 1) {
+                alert("로그인 후 이용해주세요!");
+            } else {
+                location.href = "/board/new";
+            }
+        }
+
+
         class StickyNavigation {
             constructor() {
                 this.currentId = null;
