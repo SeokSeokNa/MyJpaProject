@@ -1,6 +1,7 @@
 package com.firstjpa.minijpa.repository;
 
 import com.firstjpa.minijpa.domain.Board;
+import com.firstjpa.minijpa.domain.Photo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,17 @@ public class BoardRepository {
                 "select b from Board b" +
                         " join fetch b.user u",Board.class)
                 .getResultList();
+    }
+
+    //게시글 수정
+    public void updateBoard(Board board , String title, String contents) {
+        board.setTitle(title);
+        board.setContents(contents);
+    }
+
+    //게시글 수정시 사진 지우기
+    public void deletePhoto(List<Photo> photos , int index) {
+        photos.remove(index);
     }
 
 }

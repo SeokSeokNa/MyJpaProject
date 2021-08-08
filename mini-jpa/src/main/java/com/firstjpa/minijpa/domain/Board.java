@@ -1,5 +1,6 @@
 package com.firstjpa.minijpa.domain;
 
+import com.firstjpa.minijpa.controller.Form.BoardForm;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.util.Lazy;
@@ -76,6 +77,13 @@ public class Board {
         board.setWriteDate(LocalDate.now());
 
         //파일이 존재하면 파일관련 연관관계 및 저장셋팅
+        photoUpload(board,uploadFiles);
+
+        return board;
+    }
+
+    public static void photoUpload(Board board, MultipartFile[] uploadFiles) {
+        //파일이 존재하면 파일관련 연관관계 및 저장셋팅
         if (uploadFiles != null){
             for (MultipartFile file : uploadFiles) {
                 Photo photo = new Photo();
@@ -83,8 +91,7 @@ public class Board {
                 board.addPhoto(photo);
             }
         }
-
-        return board;
     }
+
 
 }

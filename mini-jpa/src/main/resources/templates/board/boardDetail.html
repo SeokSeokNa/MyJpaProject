@@ -17,7 +17,7 @@
             <button type="button" class="btn-primary" style="float: right;position: absolute;left: 82%;top: 4%;width: 4%" onclick="location.href='/board/list'">이전</button>
              <button type="button" class="btn btn-link"
                      th:if="${session.userinfo != null}  and ${session.userinfo.getId() == board.getUser().getId()}"
-                     style="float: right;position: absolute;left: 82%;top: 8%;width: 4%" onclick="location.href='/board/list'">수정</button>
+                     style="float: right;position: absolute;left: 82%;top: 8%;width: 4%" th:onclick="'location.href=\''+ @{/board/update/{id}(id=${board.getId()})} + '\''">수정</button>
             <span class="font-weight-light" th:text="${board.getContents()}" style="font-size: 2.5rem;">Outdoor Design</span>
 
             <nav class="navbar navbar-expand-md navbar-light">

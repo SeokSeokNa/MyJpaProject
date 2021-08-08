@@ -44,12 +44,17 @@
         <div class="card scale" th:each="board : ${boardList}">
             <div class="card__img">
                 <picture>
-                    <source media="(max-width: 320px)"
+                    <source media="(max-width: 320px)" th:if="${board.getPhotos().size() > 0}"
                             th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|" sizes="">
-                    <source media="(min-width: 538px)"
+                    <source media="(max-width: 320px)" th:unless="${board.getPhotos().size() > 0}"
+                            th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" sizes="">
+                    <source media="(min-width: 538px)"th:if="${board.getPhotos().size() > 0}"
                             th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|">
+                    <source media="(min-width: 538px)"th:unless="${board.getPhotos().size() > 0}"
+                            th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|">
 
-                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|" style="width: 100%">
+                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|" th:if="${board.getPhotos().size() > 0}" style="width: 100%">
+                    <img th:src="|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" th:unless="${board.getPhotos().size() > 0}" style="width: 100%">
                 </picture>
             </div>
             <div class="card__details">

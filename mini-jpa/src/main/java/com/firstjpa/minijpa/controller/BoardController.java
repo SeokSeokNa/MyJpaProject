@@ -73,9 +73,66 @@ public class BoardController {
     }
 
     @GetMapping("/board/detail/{id}")
-    public String boardDetail2(@PathVariable("id") Long id , Model model) {
+    public String boardDetail(@PathVariable("id") Long id , Model model) {
         Board board = boardService.findById(id);
         model.addAttribute("board",board);
         return "board/boardDetail";
+    }
+
+    @GetMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable("id") Long id, Model model) {
+        Board board = boardService.findById(id);
+        BoardForm boardForm = new BoardForm();
+        boardForm.setTitle(board.getTitle());
+        boardForm.setContents(board.getContents());
+
+        model.addAttribute("id" , board.getId());
+        model.addAttribute("board" , board);
+        model.addAttribute("boardForm" , boardForm);
+        return "board/boardUpdate";
+    }
+
+
+    @ResponseBody // ajax에 응답을 주기위해 사용한 어노테이션
+    @PostMapping("/board/update/{id}")
+    public HashMap<String ,String> boardUpdate(
+            @PathVariable("id") Long id,
+            @Valid BoardForm boardForm ,
+            BindingResult result ,
+            HttpSession session ,
+            @RequestParam(value = "files" , required = false) MultipartFile[] files,
+//            @RequestParam(value = "test") String test,
+            HttpServletRequest request) {
+
+        HashMap<String, String> returnMap = new HashMap<>();
+
+
+        //Valid 체크
+        if (result.hasErrors()) { //valid통과 못한부분만 맵에 담아서 넘기기
+            returnMap.put("success","false");
+            for (Object object : result.getAllErrors()){
+                FieldError fieldError = (FieldError) object;
+                returnMap.put(fieldError.getField(),fieldError.getDefaultMessage());
+            }
+            return returnMap;
+
+        }
+        User user = (User)session.getAttribute("userinfo");
+        Board board = boardService.findById(id);
+        board.photoUpload(board,files);
+        boardService.update(board,boardForm.getTitle() , boardForm.getContents());
+        returnMap.put("success","true");
+
+        return returnMap;
+    }
+
+
+    @ResponseBody
+    @PostMapping("/board/deletePhoto")
+    public String photoDelete(@RequestBody HashMap<String, String> map) {
+        Long id = Long.parseLong(map.get("id"));
+        int index = Integer.parseInt(map.get("index"));
+        boardService.deletePhoto(id,index);
+        return "ok";
     }
 }
