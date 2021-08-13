@@ -37,7 +37,12 @@ public class BoardRepository {
         board.setContents(contents);
     }
 
-    //게시글 수정시 사진 지우기
+    //게시글 삭제
+    public void deleteBoard(Board board) {
+        em.remove(board);
+    }
+
+    //게시글 수정시 하나하나 사진 지우기
     public void deletePhoto(List<Photo> photos , int index) {
         photos.remove(index);
     }

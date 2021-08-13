@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/boardDetail.css}">
     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
 </head>
@@ -15,9 +16,12 @@
             </h1>
             <button type="button" class="btn-info" style="float: right;position: absolute;left: 82%;top: 0%;width: 4%" onclick="location.href='/'"/>홈</button>
             <button type="button" class="btn-primary" style="float: right;position: absolute;left: 82%;top: 4%;width: 4%" onclick="location.href='/board/list'">이전</button>
+            <button type="button" class="btn-danger"
+                    th:if="${session.userinfo != null}  and ${session.userinfo.getId() == board.getUser().getId()}"
+                    style="float: right;position: absolute;left: 82%;top: 8%;width: 4%" th:onclick="|deleteBoard('${board.getId()}')|">삭제</button>
              <button type="button" class="btn btn-link"
                      th:if="${session.userinfo != null}  and ${session.userinfo.getId() == board.getUser().getId()}"
-                     style="float: right;position: absolute;left: 82%;top: 8%;width: 4%" th:onclick="'location.href=\''+ @{/board/update/{id}(id=${board.getId()})} + '\''">수정</button>
+                     style="float: right;position: absolute;left: 82%;top: 12%;width: 4%" th:onclick="'location.href=\''+ @{/board/update/{id}(id=${board.getId()})} + '\''">수정</button>
             <span class="font-weight-light" th:text="${board.getContents()}" style="font-size: 2.5rem;">Outdoor Design</span>
 
             <nav class="navbar navbar-expand-md navbar-light">
@@ -42,6 +46,16 @@
 
         </main>
     </div>
+
+    <script language="JavaScript" type="text/javascript">
+        function deleteBoard(id) {
+            if(confirm("정말 삭제하시겠습니까?")) {
+                alert("삭제되었습니다!");
+                window.location.href="/board/deleteBoard/"+id
+            }
+        }
+
+    </script>
 
 </body>
 </html>

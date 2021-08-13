@@ -126,6 +126,12 @@ public class BoardController {
         return returnMap;
     }
 
+    @GetMapping("/board/deleteBoard/{id}")
+    public String deleteBoard(@PathVariable("id") Long id) {
+        boardService.deleteBoard(id);
+        return "redirect:/board/list";
+    }
+
 
     @ResponseBody
     @PostMapping("/board/deletePhoto")
@@ -135,4 +141,6 @@ public class BoardController {
         boardService.deletePhoto(id,index);
         return "ok";
     }
+
+
 }

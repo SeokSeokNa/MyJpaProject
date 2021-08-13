@@ -39,6 +39,18 @@ public class BoardService {
     }
 
     @Transactional
+    public void deleteBoard(Long id) {
+        Board board = findById(id);
+        List<Photo> photos = board.getPhotos();
+        File file = null;
+        for (Photo photo : photos) {
+            file = new File(MiniJpaApplication.UPLOAD_PATH , photo.getNewFileName());
+            if( file.exists()) file.delete();
+        }
+        boardRepository.deleteBoard(board);
+    }
+
+    @Transactional
     public void deletePhoto(Long id , int index) {
         Board board = findById(id);
         List<Photo> photos = board.getPhotos();
