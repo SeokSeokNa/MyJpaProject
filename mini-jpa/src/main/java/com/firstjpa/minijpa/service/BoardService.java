@@ -5,7 +5,11 @@ import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.Photo;
 import com.firstjpa.minijpa.repository.BoardRepository;
+import com.firstjpa.minijpa.repository.BoardRepository2;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +22,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardRepository2 boardRepository2;
 
     @Transactional
     public Long save(Board board) {
@@ -57,5 +62,9 @@ public class BoardService {
         File file = new File(MiniJpaApplication.UPLOAD_PATH,board.getPhotos().get(index).getNewFileName());
         if( file.exists()) file.delete();
         boardRepository.deletePhoto(photos , index);
+    }
+
+    public Page<Board> boardAll(Pageable pageable) {
+        return boardRepository2.findAll(pageable);
     }
 }

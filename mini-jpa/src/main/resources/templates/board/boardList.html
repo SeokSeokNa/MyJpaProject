@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body style="background: white">
 <div class="plus-button"></div>
@@ -48,13 +49,15 @@
                             th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|" sizes="">
                     <source media="(max-width: 320px)" th:unless="${board.getPhotos().size() > 0}"
                             th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" sizes="">
-                    <source media="(min-width: 538px)"th:if="${board.getPhotos().size() > 0}"
+                    <source media="(min-width: 538px)" th:if="${board.getPhotos().size() > 0}"
                             th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|">
-                    <source media="(min-width: 538px)"th:unless="${board.getPhotos().size() > 0}"
+                    <source media="(min-width: 538px)" th:unless="${board.getPhotos().size() > 0}"
                             th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|">
 
-                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|" th:if="${board.getPhotos().size() > 0}" style="width: 100%">
-                    <img th:src="|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" th:unless="${board.getPhotos().size() > 0}" style="width: 100%">
+                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|"
+                         th:if="${board.getPhotos().size() > 0}" style="width: 100%">
+                    <img th:src="|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|"
+                         th:unless="${board.getPhotos().size() > 0}" style="width: 100%">
                 </picture>
             </div>
             <div class="card__details">
@@ -72,13 +75,26 @@
                     </div>
                 </div>
                 <button th:onclick="'location.href=\''+ @{/board/detail/{id}(id=${board.getId()})} + '\''">보기</button>
-<!--                @{/board/detail/{id}(id=${board.getId()})}-->
+                <!--                @{/board/detail/{id}(id=${board.getId()})}-->
             </div>
             <span class="credit-img">image by: @seokseokNa</span>
         </div>
 
     </div>
 </div>
+
+<div class="paging">
+    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" th:if="${1==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>이전</span></a>
+    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" class="direction prev"th:unless="${1==(boardList.pageable.pageNumber + 1)}"><span>이전</span></a>
+    <th:block th:each="i : ${#numbers.sequence(startPage , endPage)}">
+        <a th:href="@{/board/list(page=${i - 1})}" th:if="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" style="color: #fff;background: #4c8500;border: 1px solid #4c8500;" disabled="true"></a>
+        <a th:href="@{/board/list(page=${i - 1})}" th:unless="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" ></a>
+    </th:block>
+
+    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}"  th:if="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>다음</span></a>
+    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}" class="direction next" th:unless="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}"><span>다음</span></a>
+</div><!-- //paging -->
+
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function () {
         var insta_org = "";
@@ -89,17 +105,17 @@
         //+버튼 눌럿을때
         $('.plus-button').click(function () {
             var obj = $(".plus-button").offset();
-            if($(".plus-button").attr("class")=="plus-button open"){
+            if ($(".plus-button").attr("class") == "plus-button open") {
                 $(this).removeClass('open');
 
-                $(".twitter-button").css({"top":+twit_org.top +"px"});
-                $(".twitter-button").css("right","");
-                $(".facebook-button").css({"top":+face_org.top +"px"});
-                $(".facebook-button").css("right","");
-                $(".pinterest-button").css({"top":+pin_org.top +"px"});
-                $(".pinterest-button").css("right","");
-                $(".insta-button").css({"top":+insta_org.top +"px"});
-                $(".insta-button").css("right","");
+                $(".twitter-button").css({"top": +twit_org.top + "px"});
+                $(".twitter-button").css("right", "");
+                $(".facebook-button").css({"top": +face_org.top + "px"});
+                $(".facebook-button").css("right", "");
+                $(".pinterest-button").css({"top": +pin_org.top + "px"});
+                $(".pinterest-button").css("right", "");
+                $(".insta-button").css({"top": +insta_org.top + "px"});
+                $(".insta-button").css("right", "");
 
             } else {
                 twit_org = $(".twitter-button").offset();
@@ -107,14 +123,14 @@
                 pin_org = $(".pinterest-button").offset();
                 insta_org = $(".insta-button").offset();
                 $(this).addClass('open');
-                $(".twitter-button").css({"top":+obj.top -90 + "px"});
-                $(".twitter-button").css({"right":"1%"});
-                $(".facebook-button").css({"top":+obj.top -80 + "px"});
-                $(".facebook-button").css({"right":"4%"});
-                $(".pinterest-button").css({"top":+obj.top -30 + "px"});
-                $(".pinterest-button").css({"right":"6%"});
-                $(".insta-button").css({"top":+obj.top + 30 + "px"});
-                $(".insta-button").css({"right":"6%"});
+                $(".twitter-button").css({"top": +obj.top - 90 + "px"});
+                $(".twitter-button").css({"right": "1%"});
+                $(".facebook-button").css({"top": +obj.top - 80 + "px"});
+                $(".facebook-button").css({"right": "4%"});
+                $(".pinterest-button").css({"top": +obj.top - 30 + "px"});
+                $(".pinterest-button").css({"right": "6%"});
+                $(".insta-button").css({"top": +obj.top + 30 + "px"});
+                $(".insta-button").css({"right": "6%"});
             }
 
         });
@@ -133,7 +149,7 @@
         face_org = "";
         pin_org = "";
         insta_org = "";
-        $(".social-button").css({"right":""});
+        $(".social-button").css({"right": ""});
         $(".plus-button").removeClass('open');
 
         $(".plus-button").stop().animate({"top": position + currentPosition + "px"}, 10);
@@ -142,11 +158,6 @@
         $(".pinterest-button").stop().animate({"top": position + pinterestPosition + "px"}, 10);
         $(".insta-button").stop().animate({"top": position + instaPosition + "px"}, 10);
     });
-
-
-
-
-
 
 
 </script>

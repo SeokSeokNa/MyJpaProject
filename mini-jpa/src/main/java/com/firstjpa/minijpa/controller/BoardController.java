@@ -5,6 +5,10 @@ import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,8 +70,13 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList2(Model model) {
-        List<Board> boardList = boardService.boardList();
+    public String boardList2(Model model , @PageableDefault(size = 1) Pageable pageable) {
+        Page<Board> boardList = boardService.boardAll(pageable);
+        int startPage = Math.max(1,boardList.getPageable().getPageNumber() - 3);
+        int endPage = Math.min(boardList.getTotalPages() ,boardList.getPageable().getPageNumber() + 3);
+
+        model.addAttribute("startPage" , startPage);
+        model.addAttribute("endPage" , endPage);
         model.addAttribute("boardList",boardList);
         return "board/boardList";
     }
