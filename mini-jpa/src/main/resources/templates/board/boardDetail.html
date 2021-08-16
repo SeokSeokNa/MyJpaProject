@@ -14,14 +14,14 @@
         <header class="pt-4" th:object="${board}" style="background: aliceblue;">
             <h1 class="pointer" th:text="${board.getTitle()}">제목<br/>
             </h1>
-            <button type="button" class="btn-info" style="float: right;position: absolute;left: 82%;top: 0%;width: 4%" onclick="location.href='/'"/>홈</button>
-            <button type="button" class="btn-primary" style="float: right;position: absolute;left: 82%;top: 4%;width: 4%" onclick="location.href='/board/list'">이전</button>
+            <button type="button" class="btn-info" style="float: right;position: absolute;left: 74%;top: 0%;width: 4%" onclick="location.href='/'"/>홈</button>
+            <button type="button" class="btn-primary" style="float: right;position: absolute;left: 74%;top: 4%;width: 4%" onclick="location.href='/board/list'">이전</button>
             <button type="button" class="btn-danger"
                     th:if="${session.userinfo != null}  and ${session.userinfo.getId() == board.getUser().getId()}"
-                    style="float: right;position: absolute;left: 82%;top: 8%;width: 4%" th:onclick="|deleteBoard('${board.getId()}')|">삭제</button>
+                    style="float: right;position: absolute;left: 74%;top: 8%;width: 4%" th:onclick="|deleteBoard('${board.getId()}')|">삭제</button>
              <button type="button" class="btn btn-link"
                      th:if="${session.userinfo != null}  and ${session.userinfo.getId() == board.getUser().getId()}"
-                     style="float: right;position: absolute;left: 82%;top: 12%;width: 4%" th:onclick="'location.href=\''+ @{/board/update/{id}(id=${board.getId()})} + '\''">수정</button>
+                     style="float: right;position: absolute;left: 74%;top: 12%;width: 4%" th:onclick="'location.href=\''+ @{/board/update/{id}(id=${board.getId()})} + '\''">수정</button>
             <span class="font-weight-light" th:text="${board.getContents()}" style="font-size: 2.5rem;">Outdoor Design</span>
 
             <nav class="navbar navbar-expand-md navbar-light">
@@ -39,7 +39,7 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-md-6 col-sm-12" th:each="photo:${board.getPhotos()}">
                     <img th:src="|/images/${photo.getNewFileName()}|"
-                         alt="" class="img-thumbnail">
+                         alt="" class="img-thumbnail" style="width: 100%;height: 100%;">
                     <p class="text-center img-caption text-secondary"></p>
                 </div>
             </div>

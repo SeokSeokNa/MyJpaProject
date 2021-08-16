@@ -209,7 +209,7 @@ ul {
 }
 @media (min-width: 1025px) {
     .wrapper {
-        width: 960px;
+        width: 50%;
         margin: auto;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }

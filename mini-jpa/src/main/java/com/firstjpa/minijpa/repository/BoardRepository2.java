@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BoardRepository2 extends JpaRepository<Board, Long> {
 
-    @Query(value = "select b from Board b", countQuery = "select count (b) from Board b")
+    @Query(value = "select b from Board b join fetch b.user u order by b.writeDate desc , b.id desc ", countQuery = "select count (b) from Board b")
     Page<Board> findAll(Pageable pageable);
 
 }

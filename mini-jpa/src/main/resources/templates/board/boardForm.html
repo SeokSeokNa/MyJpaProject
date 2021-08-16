@@ -39,6 +39,7 @@
         </div>
         <div class="post-section post-media">
             <h2 style="font-size: 13px;color: #97c7a6;">여러파일을 올리시려면 파일선택 후 여러개를 한번에 올리셔야 합니다.</h2>
+            <h2 style="font-size: 20px;color: black;float: right;">현재파일 크기 :<span id="size">0</span></h2>
             <label>사진</label>
             <div class="post-media-inner">
                 <button type="button" class="post-media-icon btn btn-default" id="imgbtn">
@@ -61,12 +62,15 @@
 
     <script language="JavaScript" type="text/javascript">
         var storedFiles = []; //전송파일 배열
-
+        var mb = 1024*1024;
+        var sum_size = 0;
         function setThumbnail(event , file) {
             var fileList = file.files;
             for (var i = 0; i < fileList.length; i++) {
+                sum_size += fileList[i].size;
                 storedFiles.push(fileList[i]);
             }
+            $("#size").text((sum_size/1048576).toFixed(1)+"MB");
 
             for (var image of event.target.files) {
                 var reader = new FileReader();
@@ -86,6 +90,8 @@
                     //파일삭제 함수첨부
                     button.onclick = function () {
                         var index = $("button.btn-xs").index(this); //지금 누른 버튼의 index를 구해서
+                        sum_size -= storedFiles[index].size;
+                        $("#size").text((sum_size/1048576).toFixed(1)+"MB");
                         storedFiles.splice(index,1); //파일배열에서 해당index에 맞는 애를 지운다.
                         $(this).parent().remove();
                     };
@@ -117,7 +123,10 @@
             var editForm = $("form");
             var formData = new FormData(editForm[0]);
 
-            formData.append("test","나원석");
+            if(sum_size / mb > 500){
+                alert("최대 파일전송 크기는 500MB 입니다. 파일을 줄여주세요");
+                return;
+            }
             for (var i = 0; i < storedFiles.length; i++) {
                 formData.append("files", storedFiles[i]);
             }
