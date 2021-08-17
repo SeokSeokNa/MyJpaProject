@@ -19,7 +19,7 @@ import java.util.List;
         sequenceName = "BOARD_SEQ",      // DB에 생성된 시퀀스 이름
         initialValue = 1,                 // DDL 생성시만 사용되며 시작값
         allocationSize = 1)
-public class Board {
+public class Board extends BaseEntity{
     @Id
     @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "BOARD_SEQ_GENERATOR")

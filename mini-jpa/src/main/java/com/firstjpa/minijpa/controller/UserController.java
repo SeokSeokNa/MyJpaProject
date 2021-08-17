@@ -34,7 +34,7 @@ public class UserController {
 
     //회원가입
     @PostMapping("/users/new")
-    public String signup(@Valid UserForm userForm , BindingResult result) {
+    public String signup(@Valid UserForm userForm , BindingResult result , HttpSession session) {
         //중복체크
         if (userService.overlapId(userForm.getUserId()) > 0) {
             FieldError fieldError = new FieldError("userForm", "userId", "중복된 아이디 입니다.");
@@ -47,6 +47,7 @@ public class UserController {
             return "users/signupForm";
         }
         User user = User.createUser(userForm);
+        session.setAttribute("userinfo" , user);
         userService.join(user);
 
         return "redirect:/";

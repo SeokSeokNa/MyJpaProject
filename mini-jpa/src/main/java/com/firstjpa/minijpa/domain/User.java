@@ -13,7 +13,7 @@ import javax.persistence.*;
         sequenceName = "USER_SEQ",      // DB에 생성된 시퀀스 이름
         initialValue = 1,                 // DDL 생성시만 사용되며 시작값
         allocationSize = 1)
-public class User {
+public class User extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "USER_SEQ_GENERATOR")
     @Column(name = "member_id")
