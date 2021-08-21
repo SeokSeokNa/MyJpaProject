@@ -64,7 +64,7 @@ public class BoardService {
         boardRepository.deletePhoto(photos , index);
     }
 
-    public Page<Board> boardAll(Pageable pageable) {
-        return boardRepository2.findAll(pageable);
+    public Page<Board> boardAll(Pageable pageable ,String searchText) {
+        return boardRepository2.findBoardAll(pageable ,searchText ,searchText);
     }
 }

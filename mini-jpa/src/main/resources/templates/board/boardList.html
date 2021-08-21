@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" th:href="@{/css/boardList2.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -15,85 +17,107 @@
 <div class="social-button insta-button"></div>
 
 
-<div class="wrapper">
-    <div class="top__header">
-        <div class="icon__menu">
-            <div class="menu__mobile">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                     width="24" height="24"
-                     viewBox="0 0 192 192"
-                     style=" fill:#000000;">
-                    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                       stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                       font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                       style="mix-blend-mode: normal">
-                        <path d="M0,192v-192h192v192z" fill="none"></path>
-                        <g fill="#ffffff">
-                            <g id="surface1">
-                                <path d="M0,34.56v7.68h192v-7.68zM0,92.16v7.68h192v-7.68zM0,149.76v7.68h192v-7.68z"></path>
+    <div class="wrapper">
+        <div class="top__header">
+            <div class="icon__menu">
+                <div class="menu__mobile">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                         width="24" height="24"
+                         viewBox="0 0 192 192"
+                         style=" fill:#000000;">
+                        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                           stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                           font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                           style="mix-blend-mode: normal">
+                            <path d="M0,192v-192h192v192z" fill="none"></path>
+                            <g fill="#ffffff">
+                                <g id="surface1">
+                                    <path d="M0,34.56v7.68h192v-7.68zM0,92.16v7.68h192v-7.68zM0,149.76v7.68h192v-7.68z"></path>
+                                </g>
                             </g>
                         </g>
-                    </g>
-                </svg>
-            </div>
-        </div>
-        <h3>We are Memory</h3>
-        <a href="/" style="float: right;">home</a>
-
-    </div>
-    <div class="cards">
-        <div class="card scale" th:each="board : ${boardList}">
-            <div class="card__img">
-                <picture>
-                    <source media="(max-width: 320px)" th:if="${board.getPhotos().size() > 0}"
-                            th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|" sizes="">
-                    <source media="(max-width: 320px)" th:unless="${board.getPhotos().size() > 0}"
-                            th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" sizes="">
-                    <source media="(min-width: 538px)" th:if="${board.getPhotos().size() > 0}"
-                            th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|">
-                    <source media="(min-width: 538px)" th:unless="${board.getPhotos().size() > 0}"
-                            th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|">
-
-                    <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|"
-                         th:if="${board.getPhotos().size() > 0}" style="width: 100%">
-                    <img th:src="|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|"
-                         th:unless="${board.getPhotos().size() > 0}" style="width: 100%">
-                </picture>
-            </div>
-            <div class="card__details">
-                <h3 for="cozyroom" th:text="${board.getTitle()}">Cozying Room</h3>
-                <div class="address" th:text="${board.getWriteDate()}">테스트</div>
-                <div class="price">
-                    <div class="star">
-                        <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
-                        <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
-                        <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
-                        <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
-                    </div>
-                    <div class="price__l">
-                        <span class="price__label" th:text="${board.getUser().getName()}">IDR 1500K /</span>
-                    </div>
+                    </svg>
                 </div>
-                <button th:onclick="'location.href=\''+ @{/board/detail/{id}(id=${board.getId()})} + '\''">보기</button>
-                <!--                @{/board/detail/{id}(id=${board.getId()})}-->
             </div>
-            <span class="credit-img">image by: @seokseokNa</span>
+            <h3>We are Memory</h3>
+            <a href="/" style="float: right;">home</a>
+
         </div>
 
+        <div class="cards" th:if="${boardList.totalPages !=0}">
+            <div class="card scale" th:each="board : ${boardList}">
+                <div class="card__img">
+                    <picture>
+                        <source media="(max-width: 320px)" th:if="${board.getPhotos().size() > 0}"
+                                th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|" sizes="">
+                        <source media="(max-width: 320px)" th:unless="${board.getPhotos().size() > 0}"
+                                th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|" sizes="">
+                        <source media="(min-width: 538px)" th:if="${board.getPhotos().size() > 0}"
+                                th:attr="srcset=|/images/${board.getPhotos()[0].getNewFileName()}|">
+                        <source media="(min-width: 538px)" th:unless="${board.getPhotos().size() > 0}"
+                                th:attr="srcset=|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|">
+
+                        <img th:src="|/images/${board.getPhotos()[0].getNewFileName()}|"
+                             th:if="${board.getPhotos().size() > 0}" style="width: 100%">
+                        <img th:src="|/images/3e158b49-012f-427d-8435-ceb3ad70dac7_people.png|"
+                             th:unless="${board.getPhotos().size() > 0}" style="width: 100%">
+                    </picture>
+                </div>
+                <div class="card__details">
+                    <h3 for="cozyroom" th:text="${board.getTitle()}">Cozying Room</h3>
+                    <div class="address" th:text="${board.getWriteDate()}">테스트</div>
+                    <div class="price">
+                        <div class="star">
+                            <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
+                            <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
+                            <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
+                            <img src="https://image.flaticon.com/icons/svg/291/291205.svg" alt="">
+                        </div>
+                        <div class="price__l">
+                            <span class="price__label" th:text="${board.getUser().getName()}">IDR 1500K /</span>
+                        </div>
+                    </div>
+                    <button th:onclick="'location.href=\''+ @{/board/detail/{id}(id=${board.getId()})} + '\''">보기</button>
+                    <!--                @{/board/detail/{id}(id=${board.getId()})}-->
+                </div>
+                <span class="credit-img">image by: @seokseokNa</span>
+            </div>
+
+        </div>
+        <div class="cards" th:unless="${boardList.totalPages !=0}"><p>게시물이 존재하지 않습니다!</p></div>
     </div>
-</div>
+
+
+
+
+
 
 <div class="paging">
-    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" th:if="${1==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>이전</span></a>
-    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" class="direction prev"th:unless="${1==(boardList.pageable.pageNumber + 1)}"><span>이전</span></a>
-    <th:block th:each="i : ${#numbers.sequence(startPage , endPage)}">
-        <a th:href="@{/board/list(page=${i - 1})}" th:if="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" style="color: #fff;background: #4c8500;border: 1px solid #4c8500;" disabled="true"></a>
-        <a th:href="@{/board/list(page=${i - 1})}" th:unless="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" ></a>
+    <th:block th:if="${boardList.totalPages !=0}">
+        <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" th:if="${1==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>이전</span></a>
+        <a th:href="@{/board/list(page=${boardList.pageable.pageNumber -1})}" class="direction prev"th:unless="${1==(boardList.pageable.pageNumber + 1)}"><span>이전</span></a>
+        <th:block th:each="i : ${#numbers.sequence(startPage , endPage)}">
+            <a th:href="@{/board/list(page=${i - 1})}" th:if="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" style="color: #fff;background: #4c8500;border: 1px solid #4c8500;" disabled="true"></a>
+            <a th:href="@{/board/list(page=${i - 1})}" th:unless="${i==(boardList.pageable.pageNumber + 1)}" th:text="${i}" ></a>
+        </th:block>
+
+        <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}"  th:if="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>다음</span></a>
+        <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}" class="direction next" th:unless="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}"><span>다음</span></a>
     </th:block>
 
-    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}"  th:if="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}" style="display: none"><span>다음</span></a>
-    <a th:href="@{/board/list(page=${boardList.pageable.pageNumber +1})}" class="direction next" th:unless="${boardList.totalPages==(boardList.pageable.pageNumber + 1)}"><span>다음</span></a>
+
 </div><!-- //paging -->
+<form action="/board/list" method="get" id="searchform">
+    <div class="wrap">
+        <div class="search">
+            <input type="text" class="searchTerm" placeholder="What are you looking for?" name="searchText" id="searchText" th:value="${param.searchText}">
+            <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div><!--Search 검색-->
+</form>
+
 
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function () {

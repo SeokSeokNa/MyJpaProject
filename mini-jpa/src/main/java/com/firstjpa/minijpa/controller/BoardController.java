@@ -70,25 +70,18 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList2(Model model , @PageableDefault(size = 6) Pageable pageable) {
-        Page<Board> boardList = boardService.boardAll(pageable);
+    public String boardList2(Model model
+            , @PageableDefault(size = 6) Pageable pageable
+            , @RequestParam(required = false , defaultValue = "") String searchText) {
+        Page<Board> boardList = boardService.boardAll(pageable ,searchText);
+
         int curPage= boardList.getPageable().getPageNumber();
         int i = curPage / 5;
         int startPage;
         int endPage;
 
-        if (i < 1) {
-            startPage = Math.max(1,i);
-            endPage = Math.min(boardList.getTotalPages() ,startPage + 4);
-        } else {
-            startPage = Math.max(1,i*5+1);
-            endPage = Math.min(boardList.getTotalPages() ,startPage + 4);
-        }
-
-
-
-
-
+        startPage = Math.max(1,i*5+1);
+        endPage = Math.min(boardList.getTotalPages() ,startPage + 4);
 
         model.addAttribute("startPage" , startPage);
         model.addAttribute("endPage" , endPage);
