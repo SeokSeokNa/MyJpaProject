@@ -3,6 +3,7 @@ package com.firstjpa.minijpa.controller;
 import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
+import com.firstjpa.minijpa.dto.BoardDto;
 import com.firstjpa.minijpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,7 +74,7 @@ public class BoardController {
     public String boardList2(Model model
             , @PageableDefault(size = 6) Pageable pageable
             , @RequestParam(required = false , defaultValue = "") String searchText) {
-        Page<Board> boardList = boardService.boardAll(pageable ,searchText);
+        Page<BoardDto> boardList = boardService.boardAll(pageable ,searchText);
 
         int curPage= boardList.getPageable().getPageNumber();
         int i = curPage / 5;

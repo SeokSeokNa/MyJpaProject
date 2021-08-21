@@ -4,6 +4,8 @@ import com.firstjpa.minijpa.MiniJpaApplication;
 import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.Photo;
+import com.firstjpa.minijpa.dto.BoardDto;
+import com.firstjpa.minijpa.dto.PhotoDto;
 import com.firstjpa.minijpa.repository.BoardRepository;
 import com.firstjpa.minijpa.repository.BoardRepository2;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -64,7 +67,8 @@ public class BoardService {
         boardRepository.deletePhoto(photos , index);
     }
 
-    public Page<Board> boardAll(Pageable pageable ,String searchText) {
-        return boardRepository2.findBoardAll(pageable ,searchText ,searchText);
+    public Page<BoardDto> boardAll(Pageable pageable , String searchText) {
+        Page<Board> boardAll = boardRepository2.findBoardAll(pageable, searchText);
+        return boardAll.map(board -> new BoardDto(board));
     }
 }
