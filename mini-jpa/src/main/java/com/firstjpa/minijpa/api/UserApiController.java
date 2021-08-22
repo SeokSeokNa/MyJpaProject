@@ -18,7 +18,7 @@ public class UserApiController {
 
     @GetMapping("/api/v1/user")
     public List<UserApiDto> boardV1_page() {
-        List<User> findUser = userRepository.findByUserId("nsk7647");
+        List<User> findUser = userRepository.findAll();
         List<UserApiDto> collect = findUser.stream()
                 .map(user -> new UserApiDto(user))
                 .collect(Collectors.toList());
