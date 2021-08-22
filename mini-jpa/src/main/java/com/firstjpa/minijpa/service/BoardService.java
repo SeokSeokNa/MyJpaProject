@@ -33,8 +33,11 @@ public class BoardService {
         return board.getId();
     }
 
+    @Transactional
     public Board findById(Long id) {
-        return boardRepository.findById(id);
+        Board board = boardRepository.findById(id);
+        board.upHit();
+        return board;
     }
 
     public List<Board> boardList() {

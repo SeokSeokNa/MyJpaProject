@@ -3,6 +3,7 @@ package com.firstjpa.minijpa.domain;
 import com.firstjpa.minijpa.controller.Form.BoardForm;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.util.Lazy;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +20,7 @@ import java.util.List;
         sequenceName = "BOARD_SEQ",      // DB에 생성된 시퀀스 이름
         initialValue = 1,                 // DDL 생성시만 사용되며 시작값
         allocationSize = 1)
-public class Board extends BaseEntity{
+public class Board{
     @Id
     @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "BOARD_SEQ_GENERATOR")
@@ -43,6 +44,13 @@ public class Board extends BaseEntity{
 
     private LocalDate writeDate;
 
+    @ColumnDefault("0")
+    private Integer hit = 0;
+
+
+    public void upHit() {
+        this.hit +=1;
+    }
 
     public void addPhoto(Photo photo) {
         photos.add(photo);

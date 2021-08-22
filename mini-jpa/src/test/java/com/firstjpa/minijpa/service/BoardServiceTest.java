@@ -5,7 +5,7 @@ import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.repository.BoardRepository;
 import com.firstjpa.minijpa.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,5 +33,16 @@ class BoardServiceTest {
 //        boardRepository.save(post);
 //
 //        Assertions.assertEquals("제목" , post.getTitle());
+    }
+
+    @Test
+    public void upHit() throws Exception {
+        //given
+        Board board = boardRepository.findById(3L);
+        //when
+        board.upHit();
+
+        //then
+        Assertions.assertThat(board.getHit()).isEqualTo(1);
     }
 }

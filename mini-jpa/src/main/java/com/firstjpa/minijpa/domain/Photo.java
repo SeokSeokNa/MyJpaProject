@@ -1,5 +1,6 @@
 package com.firstjpa.minijpa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.firstjpa.minijpa.MiniJpaApplication;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class Photo {
     @Column(name = "photo_id")
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
