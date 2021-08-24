@@ -1,6 +1,5 @@
 package com.firstjpa.minijpa.access_token;
 
-import com.firstjpa.minijpa.api.Message;
 import com.firstjpa.minijpa.api.StatusEnum;
 import com.firstjpa.minijpa.exception.AuthException;
 import io.jsonwebtoken.*;
@@ -12,6 +11,8 @@ import java.util.Map;
 
 @Component
 public class JwtToken {
+    private Long expiredTime = 1000 * 60L*30L; // 토큰 유효 시간 (30분)
+    private String alg_key = "secret";
 /*
 iss : 토큰 발급자
 sub : 토큰의 제목
@@ -27,7 +28,6 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
  */
 
     public String makeJwtToken(String userId) {
-        Long expiredTime = 1000 * 60L; // 토큰 유효 시간 (1분)
 
         Date ext = new Date(); // 토큰 만료 시간
         ext.setTime(ext.getTime() + expiredTime);
@@ -39,7 +39,7 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
 
         //페이로드
         HashMap<String, Object> payloads = new HashMap<>();
-        payloads.put("iss", "seok"); //발급자
+        payloads.put("iss", "seok(admin)"); //발급자
         payloads.put("aud",userId);//발급받는 대상
         payloads.put("data", "hello world"); //일반 데이터
 
@@ -48,7 +48,7 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
                 .setHeader(headers)
                 .setClaims(payloads)
                 .setExpiration(ext) //만료시간
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, alg_key)
                 .compact();
 //                .setHeaderParam(Header.TYPE, Header.JWT_TYPE) // (1) 헤더의 타입(typ)을 지정할 수 있습니다. jwt를 사용하기 때문에 Header.JWT_TYPE로 사용해줍니다.
 //                .setIssuer("seok") // (2) 등록된 클레임 중, 토큰 발급자(iss)를 설정할 수 있습니다.
@@ -71,7 +71,7 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
         try {
             Map<String, Object> claimMap = null;
             Claims claims = Jwts.parser()
-                    .setSigningKey("secret")
+                    .setSigningKey(alg_key)
                     .parseClaimsJws(authorizationHeader)
                     .getBody();
 
@@ -82,15 +82,15 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
             System.out.println(claimMap);
             return true;
         } catch (UnsupportedJwtException ue) {
-            throw  new AuthException("예상하는 형식과 다른 형식이거나 구성 입니다.");
+            throw  new AuthException(StatusEnum.Unsupport.getMessage());
         } catch (MalformedJwtException me) {
-            throw  new AuthException("올바른 구성이 아닙니다.");
+            throw  new AuthException(StatusEnum.MalformedJwt.getMessage());
         } catch (ExpiredJwtException ee) {
-            throw  new AuthException("로그인 유효기간이 초과되었습니다. 다시 로그인 해주세요!");
+            throw  new AuthException(StatusEnum.Expired.getMessage());
         } catch (SignatureException se) {
-            throw  new AuthException("토큰이 위조된 이력이 있습니다!");
+            throw  new AuthException(StatusEnum.Signature.getMessage());
         } catch (IllegalArgumentException ie) {
-            throw  new AuthException("다시 로그인 해주세요");
+            throw  new AuthException(StatusEnum.IllegalArgument.getMessage());
         }
 
     }

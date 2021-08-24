@@ -1,10 +1,9 @@
-package com.firstjpa.minijpa.access_token;
+package com.firstjpa.minijpa.api_dto;
 
 import lombok.Getter;
 
 @Getter
-public class LoginRequest {
-
+public class LoginRequestDto {
     private String userId;
     private String password;
 }

@@ -1,13 +1,13 @@
-package com.firstjpa.minijpa.access_token;
+package com.firstjpa.minijpa.api_dto;
 
 import lombok.Getter;
 
 @Getter
-public class TokenResponse {
+public class TokenResponseDto {
     private String accessToken;
     private String tokenType;
 
-    public TokenResponse(String accessToken, String tokenType) {
+    public TokenResponseDto(String accessToken, String tokenType) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
     }

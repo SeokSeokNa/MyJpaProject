@@ -1,10 +1,9 @@
 package com.firstjpa.minijpa.api;
 
 import com.firstjpa.minijpa.access_token.JwtToken;
-import com.firstjpa.minijpa.access_token.LoginRequest;
-import com.firstjpa.minijpa.access_token.TokenResponse;
+import com.firstjpa.minijpa.api_dto.LoginRequestDto;
+import com.firstjpa.minijpa.api_dto.TokenResponseDto;
 import com.firstjpa.minijpa.domain.User;
-import com.firstjpa.minijpa.exception.AuthException;
 import com.firstjpa.minijpa.repository.UserRepository2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +22,9 @@ public class TokenAPiContoller {
     private final JwtToken jwtToken;
 
     @PostMapping("/api/login")
-    public ResponseEntity<Message> login(@RequestBody LoginRequest loginRequest) throws Exception {
+    public ResponseEntity<Message> login(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
         //안드로이드에서 넘어온 id, 비밀번호를 가지고 db에서 조회
-        List<User> findUser = userRepository.findByUserIdAndPassword(loginRequest.getUserId(), loginRequest.getPassword());
+        List<User> findUser = userRepository.findByUserIdAndPassword(loginRequestDto.getUserId(), loginRequestDto.getPassword());
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
@@ -35,8 +34,8 @@ public class TokenAPiContoller {
             User user = findUser.get(0);
             System.out.println(user.getUserId());
             message.setStatus(StatusEnum.OK.statusCode);
-            message.setMessage(StatusEnum.OK.code);
-            message.setUserAccess(new TokenResponse(jwtToken.makeJwtToken(user.getUserId()),"bearer"));
+            message.setMessage(StatusEnum.OK.message);
+            message.setUserAccess(new TokenResponseDto(jwtToken.makeJwtToken(user.getUserId()),"bearer"));
         } catch (Exception e) {
             throw new Exception("아이디 또는 비밀번호가 틀렸습니다");
         }
