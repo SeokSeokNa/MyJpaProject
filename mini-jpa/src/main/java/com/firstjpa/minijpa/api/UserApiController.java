@@ -16,6 +16,7 @@ public class UserApiController {
 
     private final UserRepository2 userRepository;
 
+
     @GetMapping("/api/v1/user")
     public List<UserApiDto> boardV1_page() {
         List<User> findUser = userRepository.findAll();
@@ -24,4 +25,6 @@ public class UserApiController {
                 .collect(Collectors.toList());
         return collect;
     }
+
+
 }
