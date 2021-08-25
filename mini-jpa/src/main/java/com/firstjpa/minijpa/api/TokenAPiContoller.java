@@ -32,10 +32,10 @@ public class TokenAPiContoller {
         //조회된 정보가 있으면
         try {
             User user = findUser.get(0);
-            System.out.println(user.getUserId());
+            System.out.println(user.getName());
             message.setStatus(StatusEnum.OK.statusCode);
             message.setMessage(StatusEnum.OK.message);
-            message.setUserAccess(new TokenResponseDto(jwtToken.makeJwtToken(user.getUserId()),"bearer"));
+            message.setUserAccess(new TokenResponseDto(jwtToken.makeJwtToken(user.getUserId()),"bearer" , user.getName()) );
         } catch (Exception e) {
             throw new Exception("아이디 또는 비밀번호가 틀렸습니다");
         }
