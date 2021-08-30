@@ -42,6 +42,6 @@ public class BoardApiController {
         System.out.println(board.getTitle());
         System.out.println(board.getContents());
 
-        return 1L;
+        return boardRepository.save(board).getId();
     }
 }
