@@ -16,6 +16,8 @@ import java.util.List;
 @Repository
 public interface BoardRepository2 extends JpaRepository<Board, Long> {
 
+
+
     @EntityGraph(attributePaths = {"user"})
     @Query(value = "select b from Board b " +
             "where b.title like %:searchText% or b.contents like %:searchText% order by b.writeDate desc , b.id desc "

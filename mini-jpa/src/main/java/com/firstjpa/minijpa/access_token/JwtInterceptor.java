@@ -20,9 +20,11 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (token != null && token.length() > 0) {
             System.out.println("인터페이스 들어옴");
             jwtToken.parseJwtToken(token);
+            String userId = jwtToken.getUserId(token);
+            request.setAttribute("userId" , userId);
             return true;
         } else {
-            throw new AuthException("유효한 인증토큰이 존재하지 않습니다");
+            throw new AuthException("권한이 없습니다 로그인 이후 이용해주세요!");//토큰 발급을 안받았을 경우
         }
 
     }

@@ -47,6 +47,7 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
         return Jwts.builder()
                 .setHeader(headers)
                 .setClaims(payloads)
+                .setSubject(userId)
                 .setExpiration(ext) //만료시간
                 .signWith(SignatureAlgorithm.HS256, alg_key)
                 .compact();
@@ -75,6 +76,7 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
                     .parseClaimsJws(authorizationHeader)
                     .getBody();
 
+
             Date exp = claims.get("exp", Date.class);
             System.out.println("exp = " + exp);
 
@@ -93,5 +95,14 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
             throw  new AuthException(StatusEnum.IllegalArgument.getMessage());
         }
 
+    }
+
+
+    public String getUserId(String token) {
+        String userId = Jwts.parser()
+                .setSigningKey(alg_key)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
+        return userId;
     }
 }
