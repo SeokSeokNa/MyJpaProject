@@ -33,12 +33,18 @@ public class BoardApiController {
     @PostMapping("/api/v1/board/new")
     public Long postBoard(
             @RequestAttribute(name = "userId")String userId ,
-            @RequestBody BoardForm boardForm ,
+            @RequestParam(value = "title") String title ,
+            @RequestParam(value = "content") String content ,
             @RequestParam(value = "files" , required = false) MultipartFile[] files) {
+
+
+        System.out.println("title = " + title);
+        System.out.println("content = " + content);
+        System.out.println("files = " + files[0].getOriginalFilename());
         Optional<User> findUser = userRepository.findByUserId(userId);
         User user = findUser.get();
 
-        Board board = Board.createBoard2(user, boardForm.getTitle(), boardForm.getContents(), files);
+        Board board = Board.createBoard2(user, title, content, files);
         System.out.println(board.getTitle());
         System.out.println(board.getContents());
 
