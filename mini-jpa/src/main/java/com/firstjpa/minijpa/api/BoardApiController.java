@@ -40,7 +40,6 @@ public class BoardApiController {
 
         System.out.println("title = " + title);
         System.out.println("content = " + content);
-        System.out.println("files = " + files[0].getOriginalFilename());
         Optional<User> findUser = userRepository.findByUserId(userId);
         User user = findUser.get();
 
