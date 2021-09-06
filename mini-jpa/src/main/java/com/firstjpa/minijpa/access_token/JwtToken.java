@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 public class JwtToken {
     private Long expiredTime = 1000L * 60 *30; // 토큰 유효 시간 (1분)
-    private Long refresh_expiredTime = 1000L * 60L * 60 * 24; // 토큰 유효 시간 (24시간) 1000 * 60L*60L*24L
+    private Long refresh_expiredTime = 1000L * 60 * 60 * 24; // 토큰 유효 시간 (24시간) 1000 * 60L*60L*24L
     private String alg_key = "secret";
 /*
 iss : 토큰 발급자
