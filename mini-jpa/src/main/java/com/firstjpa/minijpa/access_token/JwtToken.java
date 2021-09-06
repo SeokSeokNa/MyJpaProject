@@ -11,7 +11,8 @@ import java.util.Map;
 
 @Component
 public class JwtToken {
-    private Long expiredTime = 1000 * 60L*30L; // 토큰 유효 시간 (30분)
+    private Long expiredTime = 1000L * 60 *30; // 토큰 유효 시간 (1분)
+    private Long refresh_expiredTime = 1000L * 60L * 60 * 24; // 토큰 유효 시간 (24시간) 1000 * 60L*60L*24L
     private String alg_key = "secret";
 /*
 iss : 토큰 발급자
@@ -27,10 +28,14 @@ ExpiredJwtException : JWT를 생성할 때 지정한 유효기간이 초과되�
 SignatureException : JWT의 기존 서명을 확인하지 못했을 때
  */
 
-    public String makeJwtToken(String userId) {
+    public String makeJwtToken(String userId , int kind_token) {
 
         Date ext = new Date(); // 토큰 만료 시간
-        ext.setTime(ext.getTime() + expiredTime);
+        if (kind_token == 0) { // accessToken
+            ext.setTime(ext.getTime() + expiredTime);
+        } else {//refreshToken
+            ext.setTime(ext.getTime() + refresh_expiredTime);
+        }
 
         //헤더
         Map<String, Object> headers = new HashMap<>();
@@ -104,5 +109,13 @@ SignatureException : JWT의 기존 서명을 확인하지 못했을 때
                 .parseClaimsJws(token)
                 .getBody().getSubject();
         return userId;
+    }
+
+    public Long getExpiredTime(String token) {
+        long time = Jwts.parser()
+                .setSigningKey(alg_key)
+                .parseClaimsJws(token)
+                .getBody().getExpiration().getTime();
+        return time;
     }
 }

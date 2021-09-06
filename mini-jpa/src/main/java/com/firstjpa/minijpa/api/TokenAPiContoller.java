@@ -4,6 +4,7 @@ import com.firstjpa.minijpa.access_token.JwtToken;
 import com.firstjpa.minijpa.api_dto.LoginRequestDto;
 import com.firstjpa.minijpa.api_dto.TokenResponseDto;
 import com.firstjpa.minijpa.domain.User;
+import com.firstjpa.minijpa.exception.AuthException;
 import com.firstjpa.minijpa.repository.UserRepository2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,9 @@ public class TokenAPiContoller {
             System.out.println(user.getName());
             message.setStatus(StatusEnum.OK.statusCode);
             message.setMessage(StatusEnum.OK.message);
-            message.setUserAccess(new TokenResponseDto(jwtToken.makeJwtToken(user.getUserId()),"bearer" , user.getName()) );
+            String accessToken = jwtToken.makeJwtToken(user.getUserId(), 0);
+            String refreshToken = jwtToken.makeJwtToken(user.getUserId(), 1);
+            message.setUserAccess(new TokenResponseDto(accessToken , refreshToken,"bearer" , user.getName() ,jwtToken.getExpiredTime(accessToken)) );
         } catch (Exception e) {
             throw new Exception("아이디 또는 비밀번호가 틀렸습니다");
         }
@@ -52,5 +55,13 @@ public class TokenAPiContoller {
 
 
         return true;
+    }
+
+    @PostMapping("/api/refreshToken")
+    public TokenResponseDto refresh(@RequestHeader(value = "refreshToken") String refreshToken) {
+        jwtToken.parseJwtToken(refreshToken);
+        String accessToken = jwtToken.makeJwtToken(jwtToken.getUserId(refreshToken), 0);
+        TokenResponseDto return_val = new TokenResponseDto(accessToken, refreshToken, "bearer", null , jwtToken.getExpiredTime(accessToken));
+        return return_val;
     }
 }
