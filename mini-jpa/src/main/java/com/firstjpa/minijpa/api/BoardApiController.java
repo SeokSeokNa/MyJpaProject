@@ -4,6 +4,7 @@ import com.firstjpa.minijpa.api_dto.BoardApiDto;
 import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
+import com.firstjpa.minijpa.dto.BoardDto;
 import com.firstjpa.minijpa.repository.BoardRepository2;
 import com.firstjpa.minijpa.repository.UserRepository2;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,30 @@ public class BoardApiController {
         System.out.println(board.getContents());
 
         return boardRepository.save(board).getId();
+    }
+
+    @GetMapping("/api/v1/boardDetail/{id}")
+    public BoardApiDto boardDetail(@PathVariable("id") Long id) {
+        Optional<Board> board = boardRepository.findOptionalById(id);
+        BoardApiDto boardApiDto;
+        if (board.isPresent()) {
+            boardApiDto = new BoardApiDto(board.get());
+        } else {
+            boardApiDto = null;
+        }
+
+        return boardApiDto;
+    }
+
+    @DeleteMapping("/api/v1/boardDelete/{id}")
+    public Long boardDelete(@PathVariable("id") Long id) {
+        Optional<Board> board = boardRepository.findById(id);
+        if (board.isPresent()) {
+            Board findBoard = board.get();
+            Board.deletePhoto(findBoard);
+            boardRepository.delete(findBoard);
+            return findBoard.getId();
+        }
+        return null;
     }
 }

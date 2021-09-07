@@ -1,5 +1,6 @@
 package com.firstjpa.minijpa.domain;
 
+import com.firstjpa.minijpa.MiniJpaApplication;
 import com.firstjpa.minijpa.controller.Form.BoardForm;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.data.util.Lazy;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,6 +100,16 @@ public class Board{
                 photo.saveFile(file);
                 board.addPhoto(photo);
             }
+        }
+    }
+
+
+    public static void deletePhoto(Board board) {
+        List<Photo> photos = board.getPhotos();
+        File file = null;
+        for (Photo photo : photos) {
+            file = new File(MiniJpaApplication.UPLOAD_PATH , photo.getNewFileName());
+            if( file.exists()) file.delete();
         }
     }
 
