@@ -20,6 +20,7 @@ public class BoardApiDto {
     private LocalDate writeDate;
     private Integer hit;
     private String userName;
+    private String userId;
     private List<PhotoApiDto> photoList;
 
     public BoardApiDto(Board board) {
@@ -29,6 +30,7 @@ public class BoardApiDto {
         this.writeDate = board.getWriteDate();
         this.hit = board.getHit();
         this.userName = board.getUser().getName();
+        this.userId = board.getUser().getUserId();
 
         photoList = board.getPhotos().stream()
                 .map(photo -> new PhotoApiDto(photo))

@@ -38,7 +38,7 @@ public class TokenAPiContoller {
             message.setMessage(StatusEnum.OK.message);
             String accessToken = jwtToken.makeJwtToken(user.getUserId(), 0);
             String refreshToken = jwtToken.makeJwtToken(user.getUserId(), 1);
-            message.setUserAccess(new TokenResponseDto(accessToken , refreshToken,"bearer" , user.getName() ,jwtToken.getExpiredTime(accessToken)) );
+            message.setUserAccess(new TokenResponseDto(accessToken , refreshToken,"bearer" , user.getName() , user.getUserId(), jwtToken.getExpiredTime(accessToken)) );
         } catch (Exception e) {
             throw new Exception("아이디 또는 비밀번호가 틀렸습니다");
         }
@@ -61,7 +61,7 @@ public class TokenAPiContoller {
     public TokenResponseDto refresh(@RequestHeader(value = "refreshToken") String refreshToken) {
         jwtToken.parseJwtToken(refreshToken);
         String accessToken = jwtToken.makeJwtToken(jwtToken.getUserId(refreshToken), 0);
-        TokenResponseDto return_val = new TokenResponseDto(accessToken, refreshToken, "bearer", null , jwtToken.getExpiredTime(accessToken));
+        TokenResponseDto return_val = new TokenResponseDto(accessToken, refreshToken, "bearer", null , null,jwtToken.getExpiredTime(accessToken));
         return return_val;
     }
 }
