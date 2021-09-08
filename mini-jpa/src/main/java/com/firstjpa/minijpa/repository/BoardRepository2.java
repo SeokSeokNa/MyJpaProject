@@ -18,6 +18,8 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository2 extends JpaRepository<Board, Long> {
 
+    Optional<Board> findOptionalById(Long id);
+
 
 
     @EntityGraph(attributePaths = {"user"})
@@ -30,7 +32,7 @@ public interface BoardRepository2 extends JpaRepository<Board, Long> {
     @Query(value = "select b from Board b join fetch b.user u order by b.id desc")
     List<Board> callBoardApi();
 
-    Optional<Board> findOptionalById(Long id);
+
 
 
 }

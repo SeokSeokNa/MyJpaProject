@@ -5,8 +5,10 @@ import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.dto.BoardDto;
+import com.firstjpa.minijpa.repository.BoardRepository;
 import com.firstjpa.minijpa.repository.BoardRepository2;
 import com.firstjpa.minijpa.repository.UserRepository2;
+import com.firstjpa.minijpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class BoardApiController {
 
     private final BoardRepository2 boardRepository;
+    private final BoardService boardService;
     private final UserRepository2 userRepository;
 
     @GetMapping("/api/v1/board/list")
@@ -62,6 +65,19 @@ public class BoardApiController {
         }
 
         return boardApiDto;
+    }
+
+    @PutMapping("/api/v1/boardModify/{id}")
+    public Long boardModify(@PathVariable("id") Long id,
+                            @RequestParam(value = "title") String title ,
+                            @RequestParam(value = "content") String content ,
+                            @RequestParam(value = "files" , required = false) MultipartFile[] files)
+    {
+        Optional<Board> board = boardRepository.findOptionalById(id);
+        Board findBoard = board.get();
+        findBoard.photoUpload(findBoard,files);
+        boardService.update(findBoard , title , content);
+        return findBoard.getId();
     }
 
     @DeleteMapping("/api/v1/boardDelete/{id}")
