@@ -1,18 +1,17 @@
 package com.firstjpa.minijpa.api;
 
 import com.firstjpa.minijpa.api_dto.BoardApiDto;
-import com.firstjpa.minijpa.controller.Form.BoardForm;
 import com.firstjpa.minijpa.domain.Board;
 import com.firstjpa.minijpa.domain.User;
-import com.firstjpa.minijpa.dto.BoardDto;
-import com.firstjpa.minijpa.repository.BoardRepository;
 import com.firstjpa.minijpa.repository.BoardRepository2;
 import com.firstjpa.minijpa.repository.UserRepository2;
 import com.firstjpa.minijpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +35,7 @@ public class BoardApiController {
 
     @PostMapping("/api/v1/board/new")
     public Long postBoard(
+            HttpServletRequest req,
             @RequestAttribute(name = "userId")String userId ,
             @RequestParam(value = "title") String title ,
             @RequestParam(value = "content") String content ,
@@ -50,7 +50,7 @@ public class BoardApiController {
         Board board = Board.createBoard2(user, title, content, files);
         System.out.println(board.getTitle());
         System.out.println(board.getContents());
-
+        req.setAttribute("user_name" , user.getName());
         return boardRepository.save(board).getId();
     }
 
