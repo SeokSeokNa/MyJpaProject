@@ -44,7 +44,7 @@ public class BoardApiController {
     public Result boardV2_page(
             @RequestParam(required = false , defaultValue = "") String title,
             @RequestParam(required = false , defaultValue = "") String contents,
-            @PageableDefault(size = 5,sort = "id",direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10,sort = "id",direction = Sort.Direction.DESC) Pageable pageable) {
         Slice<Board> boards = boardRepository.findByTitleContainsOrContentsContains(title,contents,pageable);
         System.out.println("num "+boards.hasNext());
 
