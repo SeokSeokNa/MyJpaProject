@@ -6,7 +6,13 @@ import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.repository.BoardRepository2;
 import com.firstjpa.minijpa.repository.UserRepository2;
 import com.firstjpa.minijpa.service.BoardService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +30,7 @@ public class BoardApiController {
     private final BoardService boardService;
     private final UserRepository2 userRepository;
 
+
     @GetMapping("/api/v1/board/list")
     public List<BoardApiDto> boardV1_page() {
         List<Board> boards = boardRepository.callBoardApi();
@@ -31,6 +38,20 @@ public class BoardApiController {
                 .map(b -> new BoardApiDto(b))
                 .collect(Collectors.toList());
         return collect;
+    }
+
+    @GetMapping("/api/v2/board/list")
+    public Result boardV2_page(
+            @RequestParam(required = false , defaultValue = "") String title,
+            @RequestParam(required = false , defaultValue = "") String contents,
+            @PageableDefault(size = 5,sort = "id",direction = Sort.Direction.DESC) Pageable pageable) {
+        Slice<Board> boards = boardRepository.findByTitleContainsOrContentsContains(title,contents,pageable);
+        System.out.println("num "+boards.hasNext());
+
+        List<BoardApiDto> collect = boards.stream()
+                .map(b -> new BoardApiDto(b))
+                .collect(Collectors.toList());
+        return new Result(collect.size() , boards.hasNext() , collect);
     }
 
     @PostMapping("/api/v1/board/new")
@@ -90,5 +111,14 @@ public class BoardApiController {
             return findBoard.getId();
         }
         return null;
+    }
+
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private int count;
+        private boolean hasNext;
+        private T data;
     }
 }

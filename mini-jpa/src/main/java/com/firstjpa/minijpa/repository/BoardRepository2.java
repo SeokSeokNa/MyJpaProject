@@ -6,6 +6,7 @@ import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.dto.BoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +32,9 @@ public interface BoardRepository2 extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = {"user"})
     @Query(value = "select b from Board b join fetch b.user u order by b.id desc")
     List<Board> callBoardApi();
+
+    @EntityGraph(attributePaths = {"user"})
+    Slice<Board> findByTitleContainsOrContentsContains(@Param("title")String title,@Param("contents")String contents,Pageable pageable);
 
 
 
