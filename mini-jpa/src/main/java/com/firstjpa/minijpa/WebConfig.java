@@ -13,7 +13,8 @@ public class WebConfig implements WebMvcConfigurer  {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**") //localhost:8080/images/파일명 하면 이미지가 나옴
-                .addResourceLocations("file:///C:/fileupload/");
+                .addResourceLocations("file:///C:/fileupload/");//윈도우 용
+//                .addResourceLocations("file:///images/"); //도커 용
     }
 
     //인터셉터 설정부

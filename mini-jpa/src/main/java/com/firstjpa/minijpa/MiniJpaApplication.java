@@ -15,7 +15,8 @@ import java.util.Optional;
 @EnableJpaAuditing
 @SpringBootApplication
 public class MiniJpaApplication {
-	public static final String UPLOAD_PATH = "C:\\fileupload";
+	public static final String UPLOAD_PATH = "C:\\fileupload";//윈도우 용
+//	public static final String UPLOAD_PATH = "/images/";//도커 용
 
 
 	public static void main(String[] args) {

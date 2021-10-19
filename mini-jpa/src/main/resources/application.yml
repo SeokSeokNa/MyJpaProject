@@ -1,9 +1,16 @@
 spring:
   datasource:
+#    윈도우용
     url:  jdbc:h2:tcp://localhost/~/minijpa
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+#    도커용
+#    url: jdbc:mysql://db:3307/minijpa?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: root
+#    password: pass
+#    driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
       max-file-size: 100MB
@@ -23,3 +30,11 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
