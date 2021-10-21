@@ -1,8 +1,7 @@
 package com.firstjpa.minijpa.domain;
 
 import com.firstjpa.minijpa.controller.Form.UserForm;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +12,9 @@ import javax.persistence.*;
         sequenceName = "USER_SEQ",      // DB에 생성된 시퀀스 이름
         initialValue = 1,                 // DDL 생성시만 사용되며 시작값
         allocationSize = 1)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class User extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "USER_SEQ_GENERATOR")
@@ -25,6 +27,9 @@ public class User extends BaseEntity{
     private Gender gender;
     @Embedded
     private Birth birth;
+
+    private String  role;
+
 
 
 

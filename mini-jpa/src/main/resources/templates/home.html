@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tf="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -21,13 +22,24 @@
         <h1 style="color: #f0ffff">Memories in us.</h1>
         <h3 style="color: #66f766">photo project</h3>
         <div class="et-hero-tabs-container" style="background-color: #ffffff5c">
+            <!--타임리프 방식-->
+<!--            <a class="et-hero-tab" href="/board/list">게시판</a>-->
+<!--            <a class="et-hero-tab"  th:if="${session.userinfo == null}"  th:onclick="test(1)">글쓰기</a>-->
+<!--            <a class="et-hero-tab"  th:unless="${session.userinfo == null}" th:onclick="test(2)">글쓰기</a>-->
+<!--            <a class="et-hero-tab" href="/users/login" th:if="${session.userinfo == null}">로그인</a>-->
+<!--            <a class="et-hero-tab" href="/users/logout" th:unless="${session.userinfo == null}">로그아웃</a>-->
+<!--            <a class="et-hero-tab" href="/users/new" th:if="${session.userinfo == null}">회원가입</a>-->
+<!--            <a class="et-hero-tab" href="#" th:unless="${session.userinfo == null}" th:text="${session.userinfo.name + '님'}"></a>-->
+
+            <!--스프링 시큐리티 방식-->
             <a class="et-hero-tab" href="/board/list">게시판</a>
-            <a class="et-hero-tab"  th:if="${session.userinfo == null}" th:onclick="test(1)">글쓰기</a>
-            <a class="et-hero-tab"  th:unless="${session.userinfo == null}"th:onclick="test(2)">글쓰기</a>
-            <a class="et-hero-tab" href="/users/login" th:if="${session.userinfo == null}">로그인</a>
-            <a class="et-hero-tab" href="/users/logout" th:unless="${session.userinfo == null}">로그아웃</a>
-            <a class="et-hero-tab" href="/users/new" th:if="${session.userinfo == null}">회원가입</a>
-            <a class="et-hero-tab" href="#" th:unless="${session.userinfo == null}" th:text="${session.userinfo.name + '님'}"></a>
+            <a class="et-hero-tab"  sec:authorize="isAnonymous()"  th:onclick="test(1)">글쓰기</a>
+            <a class="et-hero-tab"  sec:authorize="!isAnonymous()" th:onclick="test(2)">글쓰기</a>
+            <a class="et-hero-tab" href="/users/login" sec:authorize="isAnonymous()">로그인</a>
+            <a class="et-hero-tab" href="/users/logout" sec:authorize="!isAnonymous()">로그아웃</a>
+            <a class="et-hero-tab" href="/users/new" sec:authorize="isAnonymous()">회원가입</a>
+            <a class="et-hero-tab" href="#" sec:authorize="!isAnonymous()" sec:authentication="name">님</a>
+
             <span class="et-hero-tab-slider"></span>
         </div>
     </section>

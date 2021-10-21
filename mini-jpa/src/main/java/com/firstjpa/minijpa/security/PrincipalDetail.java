@@ -1,0 +1,66 @@
+package com.firstjpa.minijpa.security;
+
+import com.firstjpa.minijpa.domain.User;
+import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+@Getter
+public class PrincipalDetail implements UserDetails {
+    private User user;
+
+    public PrincipalDetail(User user) {
+        this.user = user;
+    }
+
+    //해당 유저의 권한을 가져오는 메소드
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        return authorities;
+
+    }
+
+    //비밀번호를 가지고 오는 메소드
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    //이름을 가지고 오는 메소드
+    @Override
+    public String getUsername() {
+        return user.getName();
+    }
+
+
+    //계정 만료 확인
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    //계정 잠금 확인
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    //계정 비밀번호 변경 확인
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    //계정 활성화 확인
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+}

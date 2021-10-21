@@ -6,6 +6,7 @@ import com.firstjpa.minijpa.domain.User;
 import com.firstjpa.minijpa.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,8 +57,11 @@ public class UserController {
 
     //UserLoginForm객체 매핑 해서 로그인 폼으로이동
     @GetMapping("/users/login")
-    public String loginForm(Model model) {
+    public String loginForm(Model model ,@RequestParam(value = "error", required = false) String error, @RequestParam(value = "exception", required = false) String exception , Authentication authentication) {
         model.addAttribute("userLoginForm", new UserLoginForm());
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        if(authentication!=null) return "redirect:/";
         return "users/loginForm";
     }
 
@@ -80,12 +84,24 @@ public class UserController {
 
         return "redirect:/";
     }
+
     
     //로그아웃
     @GetMapping("/users/logout")
     public String logout(HttpSession session) {
         log.info("로그아웃 호출");
         session.invalidate();
+
+        return "redirect:/";
+    }
+
+
+    //시큐리티 로그인
+    @PostMapping("/users/auth")
+    public String authLogin(HttpSession session , Authentication auth , Model model) {
+        log.info("로그인 호출");
+        //User user = (User) auth.getAuthorities();
+        //model.addAttribute("auth", auth);
 
         return "redirect:/";
     }

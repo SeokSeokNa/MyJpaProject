@@ -2,9 +2,11 @@ package com.firstjpa.minijpa;
 
 import com.firstjpa.minijpa.access_token.JwtInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.view.MustacheViewResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -16,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer  {
                 .addResourceLocations("file:///C:/fileupload/");//윈도우 용
 //                .addResourceLocations("file:///images/"); //도커 용
     }
+
 
     //인터셉터 설정부
     @Autowired

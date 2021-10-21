@@ -13,4 +13,10 @@ public class HomeController {
         log.info("메인 홈 접속");
         return "home";
     }
+
+    @RequestMapping("/denied")
+    public String denied() {
+        log.info("Denied 접속");
+        return "denied";
+    }
 }
